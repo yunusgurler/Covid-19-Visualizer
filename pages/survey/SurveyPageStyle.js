@@ -58,4 +58,22 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     flex: 1,
   },
+  thanksView: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: "80%",
+  },
+
+  thanksTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 30,
+  },
+  retakeSurveyTouchable: {
+    backgroundColor: "#34A0A4",
+    padding: 20,
+    marginTop: 20,
+    color: "white",
+    borderRadius: 30,
+  },
 });

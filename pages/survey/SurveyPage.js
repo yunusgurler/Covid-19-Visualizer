@@ -2,19 +2,26 @@ import { Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./SurveyPageStyle";
 import { surveyQuestions } from "./SurveyQuestions";
-import { Checkbox } from "react-native-paper";
+import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
 const SurveyPage = () => {
   const [questions, setQuestions] = useState(surveyQuestions);
   const [ques, setQues] = useState(0);
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState([false, false, false, false, false]);
 
   const handleNextQuestion = () => {
     setQues(ques + 1);
   };
 
-  const handleCheckBox = (event) => {
-    console.log("event ", event);
+  const handleCheckBox = (event, index) => {
+    const _checked = [...checked];
+    _checked[index] = event.target.checked;
+    setChecked(_checked);
+  };
+
+  const handleRetakeSurvey = () => {
+    setQues(0);
+    setChecked([false, false, false, false, false]);
   };
 
   return (
@@ -45,13 +52,14 @@ const SurveyPage = () => {
 
           {questions[ques].multiAnswer === true &&
             questions[ques].checkboxAnswers.map((item, index) => (
-              <View style={styles.checkOption}>
-                <Checkbox
-                  status="checked"
-                  key={item}
-                  onPress={() => handleCheckBox(index)}
+              <View key={index} style={styles.checkOption}>
+                <input
+                  style={{ height: 30, width: 30 }}
+                  type="checkbox"
+                  checked={checked[index]}
+                  onChange={(event) => handleCheckBox(event, index)}
                 />
-                <Text style={{ marginTop: "6px" }}>{item}</Text>
+                <Text style={{ fontSize: "20px" }}>{item}</Text>
               </View>
             ))}
 
@@ -70,8 +78,19 @@ const SurveyPage = () => {
           </View>
         </View>
       ) : (
-        <View>
-          <Text>Thank you for taking the survey</Text>
+        <View style={styles.thanksView}>
+          <MaterialIcon name="check-circle" color="#67C4C4" size={80} />
+          <Text style={styles.thanksTitle}>
+            Thank you for taking the survey
+          </Text>
+          <TouchableOpacity
+            onPress={handleRetakeSurvey}
+            style={styles.retakeSurveyTouchable}
+          >
+            <Text style={{ color: "white", fontSize: "20px" }}>
+              Retake the Survey
+            </Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
