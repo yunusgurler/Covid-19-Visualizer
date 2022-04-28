@@ -1,10 +1,10 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
-import { styles } from "./SurveyPageStyle";
+import { styles } from "./SurveyScreenStyle";
 import { surveyQuestions } from "./SurveyQuestions";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
-const SurveyPage = () => {
+const SurveyScreen = () => {
   const [questions, setQuestions] = useState(surveyQuestions);
   const [ques, setQues] = useState(0);
   const [checked, setChecked] = useState([false, false, false, false, false]);
@@ -97,4 +97,4 @@ const SurveyPage = () => {
   );
 };
 
-export default SurveyPage;
+export default SurveyScreen;

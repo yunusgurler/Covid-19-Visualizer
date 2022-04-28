@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, SafeAreaView, View } from "react-native";
-import { styles } from "./ProfilePageStyle";
+import { styles } from "./ProfileScreenStyle";
 import {
   Avatar,
   Title,
@@ -12,7 +12,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
-export default function ProfilePage() {
+export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.border}>
