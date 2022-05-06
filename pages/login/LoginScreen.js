@@ -5,7 +5,7 @@ import initializeApp from '@react-native-firebase/app';
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 //import auth from '@react-native-firebase/auth';
 
-
+import 
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZanLY7rgEXO4CT6nqB5_DbK9A_YTy6uc",
@@ -21,81 +21,15 @@ const firebaseConfig = {
 
 
 const LoginScreen = () => {
-  //const app = initializeApp(firebaseConfig)
+ 
   const navigation = useNavigation()
   
-  //merkay mey auth için denedim çalışmadı, sen çalışırken silebilirsin commentleri
-  // const [initializing, setInitializing] = useState(true)
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
 
- 
-  // function onAuthStateChanged(user) {
-  //   setUser(user);
-  //   if (initializing) setInitializing(false);
-  // }
-
-
-  // useEffect(() => {
-  //   const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-  //   return subscriber; // unsubscribe on unmount
-  // }, []);
-
-  // if (initializing) return null;
-
-  // if (!user) {
-  //   return (
-  //     <View>
-  //       <Text>Login</Text>
-  //     </View>
-  //   );
-  // }
-  // const handleSignUp = () => {
-  // auth()
-  // .createUserWithEmailAndPassword('test@example.com', 'ss')
-  // .then(() => {
-  //   console.log('User account created & signed in!');
-  //   navigation.replace("SignUp")
-  // })
-  // .catch(error => {
-  //   if (error.code === 'auth/email-already-in-use') {
-  //     console.log('That email address is already in use!');
-  //   }
-
-  //   if (error.code === 'auth/invalid-email') {
-  //     console.log('That email address is invalid!');
-  //   }
-
-  //   console.error(error);
-  // });
-
-  // }
-  // useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged(user => {
-  //     if (user) {
-  //       navigation.replace("Home")
-  //     }
-  //   })
-
-  //   return unsubscribe
-  // }, [])
-
- 
-
-  // const handleLogin = () => {
-  //   auth
-  //     .signInWithEmailAndPassword(auth, email, password)
-  //     .then(userCredentials => {
-  //       const user = userCredentials.user;
-  //       console.log('Logged in with:', user.email);
-  //     })
-  //     .catch(error => alert(error.message))
-  // }
-
-
-
-    const handleSignUp = () => {
-      //signup butonu signup ekranına götürüyo
+    const handleLogin = () => {
+      navigation.replace("Home")
+    }
+    
+    const passToSignup = () => {
       navigation.replace("SignUp")
     }
 
@@ -127,16 +61,19 @@ const LoginScreen = () => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          // onPress={handleLogin}
+          onPress={handleLogin}
           style={styles.loginButton}
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+        <Text style={styles.loginText}>Not have an account?</Text>
         <TouchableOpacity
-          onPress={handleSignUp}
+          onPress={passToSignup}
           style={[styles.signUpButton, styles.buttonOutline]}
         >
+          
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
+          
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -168,14 +105,14 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   loginButton: {
-    backgroundColor: '#50BCFF',
+    backgroundColor: '#56D6FF',
     width: '100%',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
   },
   signUpButton: {
-    backgroundColor: '#50BCFF',
+    backgroundColor: '#56D6FF',
     width: '40%',
     padding: 10,
     borderRadius: 10,
@@ -184,7 +121,7 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
-    borderColor: '#50BCFF',
+    borderColor: '#56D6FF',
     borderWidth: 2,
   },
   buttonText: {
@@ -196,5 +133,10 @@ const styles = StyleSheet.create({
     color: '#0782F9',
     fontWeight: '700',
     fontSize: 10,
+  },
+  loginText: {
+    fontSize: 12,
+    marginTop: 8,
+    marginBottom: 5,
   },
 })

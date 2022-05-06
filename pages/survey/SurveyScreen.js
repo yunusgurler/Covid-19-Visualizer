@@ -3,14 +3,22 @@ import React, { useState } from "react";
 import { styles } from "./SurveyScreenStyle";
 import { surveyQuestions } from "./SurveyQuestions";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+// import database from '@react-native-firebase/database';
+
+import firestore from '@react-native-firebase/firestore';
+import firebase from "../../firebase";
+
 
 const SurveyScreen = () => {
   const [questions, setQuestions] = useState(surveyQuestions);
   const [ques, setQues] = useState(0);
   const [checked, setChecked] = useState([false, false, false, false, false]);
+  const surveyCollection = firestore().collection('Survey DB');
+  const surveyDocument = firestore().collection('Survey DB').doc('Survey Questions');
 
   const handleNextQuestion = () => {
     setQues(ques + 1);
+    
   };
 
   const handleCheckBox = (event, index) => {
@@ -24,6 +32,8 @@ const SurveyScreen = () => {
     setChecked([false, false, false, false, false]);
   };
 
+  const surveyQuestions = firestore().surveyCollection.get();
+  console.log(surveyQuestions)
   return (
     <View style={styles.container}>
       {questions.length !== ques ? (

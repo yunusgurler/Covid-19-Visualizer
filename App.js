@@ -10,6 +10,7 @@ import ProfileScreen from "./pages/profile/ProfileScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./pages/home/HomeScreen";
 import MapScreen from "./pages/map/MapScreen";
+import SplashScreen from "./pages/login/SplashScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -45,6 +46,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen
+          options={{ headerShown: false }}
+          name="Splash"
+          component={SplashScreen}
+        />
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login"

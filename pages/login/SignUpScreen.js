@@ -12,15 +12,6 @@ import {
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  // const auth = getAuth()
-  // const handleSignOut = () => {
-  //   auth
-  //     .signOut()
-  //     .then(() => {
-  //       navigation.replace("Login")
-  //     })
-  //     .catch(error => alert(error.message))
-  // }
   const handleLogin = () => {
     navigation.replace("Login");
   };
