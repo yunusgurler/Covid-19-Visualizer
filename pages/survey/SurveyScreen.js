@@ -1,24 +1,57 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styles } from "./SurveyScreenStyle";
 import { surveyQuestions } from "./SurveyQuestions";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
-// import database from '@react-native-firebase/database';
-
-import firestore from '@react-native-firebase/firestore';
-import firebase from "../../firebase";
-
+import { getFirestore, setDoc, doc } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
 
 const SurveyScreen = () => {
   const [questions, setQuestions] = useState(surveyQuestions);
   const [ques, setQues] = useState(0);
   const [checked, setChecked] = useState([false, false, false, false, false]);
-  const surveyCollection = firestore().collection('Survey DB');
-  const surveyDocument = firestore().collection('Survey DB').doc('Survey Questions');
+
+  useEffect(() => {
+    /* const surveyCollection = firestore().collection("Survey DB");
+    const surveyDocument = firestore()
+      .collection("Survey DB")
+      .doc("Survey Questions"); */
+    const firebaseConfig = {
+      apiKey: "AIzaSyBZanLY7rgEXO4CT6nqB5_DbK9A_YTy6uc",
+      authDomain: "test-53c1e.firebaseapp.com",
+      databaseURL: "https://test-53c1e-default-rtdb.firebaseio.com",
+      projectId: "test-53c1e",
+      storageBucket: "test-53c1e.appspot.com",
+      messagingSenderId: "299737923965",
+      appId: "1:299737923965:web:7df5121174c9888a234c14",
+    };
+
+    initializeApp(firebaseConfig);
+    const firestore = getFirestore();
+
+    const res = setDoc(doc(firestore, "characters", "mario"), {
+      employment: "plumber",
+      outfitColor: "red",
+      specialAttack: "fireball",
+    });
+    console.log("res ", res);
+  }, []);
+
+  const handleWriteDatabase = () => {
+    firestore()
+      .collection("Survey DB")
+      .doc("Survey Questions")
+      .set({
+        name: "Ada Lovelace",
+        age: 30,
+      })
+      .then(() => {
+        console.log("User added!");
+      });
+  };
 
   const handleNextQuestion = () => {
     setQues(ques + 1);
-    
   };
 
   const handleCheckBox = (event, index) => {
@@ -32,8 +65,8 @@ const SurveyScreen = () => {
     setChecked([false, false, false, false, false]);
   };
 
-  const surveyQuestions = firestore().surveyCollection.get();
-  console.log(surveyQuestions)
+  /* const surveyQuestions = firestore().surveyCollection.get();
+  console.log(surveyQuestions); */
   return (
     <View style={styles.container}>
       {questions.length !== ques ? (
@@ -46,7 +79,7 @@ const SurveyScreen = () => {
           {questions[ques].multiAnswer === false && (
             <View style={styles.options}>
               <TouchableOpacity
-                onPress={handleNextQuestion}
+                //onPress={handleWriteDatabase}
                 style={styles.optionTouchable}
               >
                 <Text style={styles.option}>Yes</Text>
