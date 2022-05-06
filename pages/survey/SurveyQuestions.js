@@ -1,5 +1,9 @@
 export const surveyQuestions = [
   {
+    question: "How do you feel yourself?",
+    multiAnswer: false,
+  },
+  {
     question: "Have you tested positive for COVID-19 in the past 10 days?",
     multiAnswer: false,
   },
@@ -8,8 +12,27 @@ export const surveyQuestions = [
     multiAnswer: false,
   },
   {
-    question:
-      "Have you been told that you are suspected to have COVID-19 by a licensed healthcare provider in the past 10 days?",
+    question: "Do you smoke?",
+    multiAnswer: false,
+  },
+  {
+    question: "How many doses have you been vaccinated?",
+    multiAnswer: false,
+  },
+  {
+    question: "Do you use public transportation?",
+    multiAnswer: false,
+  },
+  {
+    question: "Do you have any chronological illness?",
+    multiAnswer: false,
+  },
+  {
+    question: "Have you contacted with someone with COVID-19 recently?",
+    multiAnswer: false,
+  },
+  {
+    question: "Do you have loss of taste or smell",
     multiAnswer: false,
   },
   {
