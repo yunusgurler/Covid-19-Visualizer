@@ -5,13 +5,7 @@ export const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
   },
-  border: {
-    justifyContent: "center",
-    boxShadow: "5px 5px 5px 5px gainsboro",
-    margin: 30,
-    textAlign: "center",
-    borderRadius: 20,
-  },
+
   userInfo: {
     paddingHorizontal: 30,
     marginBottom: 20,
@@ -31,8 +25,6 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     height: 40,
     alignItems: "center",
-    borderBottomColor: "0.5px solid #ededee",
-    borderBottomWidth: 0.2,
   },
   menuWrapper: {
     marginTop: 7,

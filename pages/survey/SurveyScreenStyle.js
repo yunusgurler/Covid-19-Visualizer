@@ -20,17 +20,16 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
   },
   button: {
-    backgroundColor: "#1A759F",
-    padding: 12,
+    padding: 10,
     borderRadius: 16,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     alignItems: "center",
     marginBottom: 30,
   },
   buttonText: {
-    fontSize: 24,
+    fontSize: 15,
     fontWeight: "600",
-    color: "white",
+    color: "#1A759F",
   },
   question: {
     fontSize: 28,
@@ -68,12 +67,12 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginTop: 30,
+    marginBottom: 200,
   },
   retakeSurveyTouchable: {
-    backgroundColor: "#34A0A4",
-    padding: 20,
+    padding: 10,
     marginTop: 20,
-    color: "white",
+    color: "#34A0A4",
     borderRadius: 30,
   },
 });
