@@ -11,6 +11,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./pages/home/HomeScreen";
 import MapScreen from "./pages/map/MapScreen";
 import SplashScreen from "./pages/splash/SplashScreen";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -19,22 +24,42 @@ function Home() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
+        }}
         name="Home"
         component={HomeScreen}
       />
       <Tab.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="map-marker" size={size} color={color} />
+          ),
+        }}
         name="Map"
         component={MapScreen}
       />
       <Tab.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="form" size={size} color={color} />
+          ),
+        }}
         name="Survey"
         component={SurveyScreen}
       />
       <Tab.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="user" size={size} color={color} />
+          ),
+        }}
         name="Profile"
         component={ProfileScreen}
       />
@@ -46,6 +71,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           options={{ headerShown: false }}
           name="Splash"
@@ -60,12 +90,6 @@ export default function App() {
           options={{ headerShown: false }}
           name="SignUp"
           component={SignUpScreen}
-        />
-
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

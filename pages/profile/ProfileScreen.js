@@ -1,5 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, SafeAreaView, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Image,
+  TextInput,
+} from "react-native";
 import { styles } from "./ProfileScreenStyle";
 import {
   Avatar,
@@ -11,21 +18,37 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import { useNavigation } from "@react-navigation/core";
 
 export default function ProfileScreen() {
+  const navigation = useNavigation();
+
+  const handleLogout = () => {
+    navigation.replace("Login");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.border}>
-        <View style={styles.userInfo}>
-          <View style={{ flexDirection: "row", marginTop: 14 }}>
-            <Avatar.Image
-              source={{
-                uri: "https://avatars.githubusercontent.com/u/63549745?v=4",
-              }}
-              size={75}
-            />
+      <View
+        style={{
+          backgroundColor: "#EEDFDE",
+          width: "100%",
+          height: 200,
+          alignItems: "center",
+        }}
+      >
+        <Image
+          source={{
+            uri: "https://avatars.githubusercontent.com/u/63549745?v=4",
+          }}
+          style={{ width: 100, height: 100, marginTop: 120, borderRadius: 50 }}
+        />
+      </View>
 
-            <View style={{ marginLeft: 16 }}>
+      <View>
+        <View style={styles.userInfo}>
+          <View style={{ flexDirection: "column", marginTop: 14 }}>
+            <View style={{ marginLeft: 16, alignItems: "center" }}>
               <Title
                 style={[
                   styles.nameTitle,
@@ -39,76 +62,40 @@ export default function ProfileScreen() {
               </Title>
               <Caption style={styles.usernameCaption}>@mervegb</Caption>
             </View>
-            <View></View>
-            <View>
-              <TouchableRipple onPress={() => {}}>
-                <AwesomeIcon
-                  style={{
-                    height: "40px",
-                    marginTop: "15px",
-                    marginLeft: "15px",
-                  }}
-                  name="edit"
-                  size={30}
-                  color="#56d6ff"
-                />
-              </TouchableRipple>
-            </View>
           </View>
         </View>
 
         <View style={styles.userInfo}>
           <View style={styles.row}>
-            <Icon name="map-marker-radius" color="#56d6ff" size={20} />
-            <Text style={{ color: "#777777", marginLeft: 10 }}>
-              Istanbul,Turkey
-            </Text>
+            <Icon name="map-marker-radius" color="black" size={20} />
+            <TextInput
+              style={{ color: "#777777", padding: 10 }}
+              placeholder="Istanbul/Turkey"
+            />
           </View>
 
           <View style={styles.row}>
-            <Icon name="phone" color="#56d6ff" size={20} />
-            <Text style={{ color: "#777777", marginLeft: 10 }}>+90 xxxxxx</Text>
+            <Icon name="phone" color="black" size={20} />
+            <TextInput
+              style={{ color: "#777777", padding: 10 }}
+              placeholder="+90 xxxxxx"
+            />
           </View>
 
           <View style={styles.row}>
-            <Icon name="email" color="#56d6ff" size={20} />
-            <Text style={{ color: "#777777", marginLeft: 10 }}>
-              mero@gmail.com
-            </Text>
+            <Icon name="email" color="black" size={20} />
+            <TextInput
+              style={{ color: "#777777", padding: 10 }}
+              placeholder=" xxx@gmail.com"
+            />
           </View>
         </View>
-
-        <View
-          style={{
-            backgroundColor: "#c6f0fe",
-            height: "50px",
-            marginBottom: "10px",
-          }}
-        ></View>
 
         <View>
           <View style={styles.menuWrapper}>
             <TouchableRipple onPress={() => {}}>
               <View style={styles.menuItem}>
-                <AwesomeIcon name="address-book" color="#56d6ff" size={20} />
-                <Text style={styles.menuItemText}>My Address</Text>
-              </View>
-            </TouchableRipple>
-          </View>
-
-          <View style={styles.menuWrapper}>
-            <TouchableRipple onPress={() => {}}>
-              <View style={styles.menuItem}>
-                <Icon name="form-select" color="#56d6ff" size={20} />
-                <Text style={styles.menuItemText}>Survey</Text>
-              </View>
-            </TouchableRipple>
-          </View>
-
-          <View style={styles.menuWrapper}>
-            <TouchableRipple onPress={() => {}}>
-              <View style={styles.menuItem}>
-                <AwesomeIcon name="heart" color="#56d6ff" size={20} />
+                <AwesomeIcon name="heart" color="black" size={20} />
                 <Text style={styles.menuItemText}>Health Status</Text>
               </View>
             </TouchableRipple>
@@ -117,7 +104,7 @@ export default function ProfileScreen() {
           <View style={styles.menuWrapper}>
             <TouchableRipple onPress={() => {}}>
               <View style={styles.menuItem}>
-                <Icon name="help-circle-outline" color="#56d6ff" size={20} />
+                <Icon name="help-circle-outline" color="black" size={20} />
                 <Text style={styles.menuItemText}>Help</Text>
               </View>
             </TouchableRipple>
@@ -126,16 +113,16 @@ export default function ProfileScreen() {
           <View style={styles.menuWrapper}>
             <TouchableRipple onPress={() => {}}>
               <View style={styles.menuItem}>
-                <MaterialIcon name="notifications" color="#56d6ff" size={20} />
+                <MaterialIcon name="notifications" color="black" size={20} />
                 <Text style={styles.menuItemText}>Notifications</Text>
               </View>
             </TouchableRipple>
           </View>
 
           <View style={styles.menuWrapper}>
-            <TouchableRipple onPress={() => {}}>
+            <TouchableRipple onPress={handleLogout}>
               <View style={styles.menuItem}>
-                <Icon name="logout" color="#56d6ff" size={20} />
+                <Icon name="logout" color="black" size={20} />
                 <Text style={styles.menuItemText}>Logout</Text>
               </View>
             </TouchableRipple>

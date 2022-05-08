@@ -1,11 +1,13 @@
 export const surveyQuestions = [
   {
-    question: "How do you feel yourself?",
+    question: "Have you tested positive for COVID-19 in the past 10 days?",
     multiAnswer: false,
   },
   {
-    question: "Have you tested positive for COVID-19 in the past 10 days?",
-    multiAnswer: false,
+    question: "How do you feel yourself?",
+    multiAnswer: true,
+    checkboxAnswers: ["awful", "fine", "very good"],
+    first: true,
   },
   {
     question: "Are you currently awaiting results from a COVID-19 test?",
@@ -39,5 +41,6 @@ export const surveyQuestions = [
     question: "Do you suffer from any of the below diseases?",
     multiAnswer: true,
     checkboxAnswers: ["cold", "fever", "cough", "headache", "muscle pain"],
+    first: false,
   },
 ];
