@@ -1,13 +1,14 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import {
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
   TextInput,
   KeyboardAvoidingView,
+  Image,
 } from "react-native";
+import { styles } from "./SignUpScreenStyle";
 //import "firebase/auth";
 
 const HomeScreen = () => {
@@ -21,8 +22,13 @@ const HomeScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <View style={styles.container} behavior="padding">
+      <Image 
+      style={styles.logo} 
+      source={require("../../assets/logo.png")}
+      />
       <View style={styles.inputContainer}>
+      
         <TextInput placeholder="Name" style={styles.input} />
         <TextInput placeholder="Email" style={styles.input} />
         <TextInput
@@ -33,6 +39,7 @@ const HomeScreen = () => {
       </View>
 
       <View style={styles.buttonContainer}>
+      
         <TouchableOpacity onPress={handleSignUp} style={styles.signUpButton}>
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
@@ -46,71 +53,9 @@ const HomeScreen = () => {
           <Text style={styles.buttonOutlineText}>Login</Text>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  inputContainer: {
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    width: "80%",
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-    margin: 15,
-  },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-  },
-  signUpButton: {
-    backgroundColor: "#50BCFF",
-    width: "100%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  loginButton: {
-    backgroundColor: "#50BCFF",
-    width: "40%",
-    padding: 10,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#50BCFF",
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: "#0782F9",
-    fontWeight: "700",
-    fontSize: 10,
-  },
-  loginText: {
-    fontSize: 12,
-    marginTop: 8,
-    marginBottom: 5,
-  },
-});

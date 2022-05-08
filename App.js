@@ -4,17 +4,18 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./pages/login/LoginScreen";
-import SignUpScreen from "./pages/login/SignUpScreen";
+import SignUpScreen from "./pages/signup/SignUpScreen";
 import SurveyScreen from "./pages/survey/SurveyScreen";
 import ProfileScreen from "./pages/profile/ProfileScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./pages/home/HomeScreen";
 import MapScreen from "./pages/map/MapScreen";
-import SplashScreen from "./pages/login/SplashScreen";
+import SplashScreen from "./pages/splash/SplashScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
