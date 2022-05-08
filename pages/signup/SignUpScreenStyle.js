@@ -28,14 +28,14 @@ export const styles = StyleSheet.create({
     },
     signUpButton: {
       backgroundColor: "#50BCFF",
-      width: "80%",
+      width: 200,
       padding: 15,
       borderRadius: 10,
       alignItems: "center",
     },
     loginButton: {
       backgroundColor: "#50BCFF",
-      width: "40%",
+      width: 100,
       padding: 10,
       borderRadius: 10,
       alignItems: "center",

@@ -4,7 +4,7 @@ import { styles } from "./SurveyScreenStyle";
 import { surveyQuestions } from "./SurveyQuestions";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { MaterialIcons } from "@expo/vector-icons";
-import SurveyScreenResult from "./SurveyScreenResult";
+
 
 const SurveyScreen = () => {
   const [questions, setQuestions] = useState(surveyQuestions);

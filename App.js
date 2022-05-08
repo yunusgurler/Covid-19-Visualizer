@@ -72,15 +72,16 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
           options={{ headerShown: false }}
           name="Splash"
           component={SplashScreen}
         />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login"
