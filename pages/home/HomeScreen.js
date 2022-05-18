@@ -1,6 +1,5 @@
 import {
   FlatList,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -105,13 +104,13 @@ const HomeScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <FlatList
         data={NEWS}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
