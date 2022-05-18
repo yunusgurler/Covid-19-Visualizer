@@ -1,11 +1,15 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "./SurveyScreenStyle";
-import { surveyQuestions } from "./SurveyQuestions";
+import { surveyQuestions, checkboxAnswers } from "./SurveyQuestions";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { MaterialIcons } from "@expo/vector-icons";
+import as from "../../firebase";
+import { getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
 
 
+const firestore = getFirestore();
+const surveyCollection = doc(firestore, "Survey DB", "Survey Answers");
 const SurveyScreen = () => {
   const [questions, setQuestions] = useState(surveyQuestions);
   const [ques, setQues] = useState(0);
@@ -17,10 +21,25 @@ const SurveyScreen = () => {
   ]);
   const [showSurveyResult, setShowSurveyResult] = useState(false);
 
+  
   const handleNextQuestion = () => {
     setQues(ques + 1);
   };
 
+  const handleFirestoreAnswerYes = () => {
+    updateDoc(surveyCollection, {
+      [ques + 1]: true
+    });
+    setQues(ques + 1);
+  }
+
+  const handleFirestoreAnswerNo = () => {
+    updateDoc(surveyCollection, {
+      [ques + 1]: false
+    });
+    setQues(ques + 1);
+  }
+  
   const handlePreviousQuestion = () => {
     setQues(ques - 1);
   };
@@ -29,14 +48,23 @@ const SurveyScreen = () => {
     const _checked = [...checked];
     _checked[index] = event.target.checked;
     setChecked(_checked);
+
+    updateDoc(surveyCollection, {
+      [ques + 1]: [...checked],
+    });
   };
 
   const handleFirstCheckBox = (event, index) => {
     const _checked = [...checkedFirstQuestion];
     _checked[index] = event.target.checked;
     setCheckedFirstQuestion(_checked);
+
+    updateDoc(surveyCollection, {
+      [ques + 1]: [...checkedFirstQuestion],
+    });
   };
 
+ 
   const handleRetakeSurvey = () => {
     setQues(0);
     setChecked([false, false, false, false, false]);
@@ -47,6 +75,8 @@ const SurveyScreen = () => {
   const handleSeeResults = () => {
     setShowSurveyResult(true);
   };
+
+
 
   return (
     <>
@@ -61,13 +91,13 @@ const SurveyScreen = () => {
             {questions[ques].multiAnswer === false && (
               <View style={styles.options}>
                 <TouchableOpacity
-                  onPress={handleNextQuestion}
+                  onPress={handleFirestoreAnswerYes}
                   style={styles.optionTouchable}
                 >
                   <Text style={styles.option}>Yes</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={handleNextQuestion}
+                  onPress={handleFirestoreAnswerNo}
                   style={styles.optionTouchable}
                 >
                   <Text style={styles.option}>No</Text>
@@ -145,6 +175,7 @@ const SurveyScreen = () => {
                       size={24}
                       color="#1A759F"
                     />
+                    
                   </View>
                 </TouchableOpacity>
               )}
