@@ -9,6 +9,7 @@ const MapScreen = () => {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
+
   return (
     <View style={styles.container}>
       <MapView
