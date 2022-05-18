@@ -1,14 +1,30 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import MapView, { Marker } from "react-native-maps";
 
 const MapScreen = () => {
+  const [mapRegion, setmapRegion] = useState({
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
   return (
-    <View>
-      <Text>MapScreen</Text>
+    <View style={styles.container}>
+      <MapView
+        style={{ alignSelf: "stretch", height: "100%" }}
+        region={mapRegion}
+      >
+        <Marker coordinate={mapRegion} title="Marker" />
+      </MapView>
     </View>
   );
 };
 
 export default MapScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

@@ -1,12 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  Button,
-  StyleSheet,
-  SafeAreaView,
-  View,
-  Image,
-  TextInput,
-} from "react-native";
+import { Button, StyleSheet, View, Image, TextInput } from "react-native";
 import { styles } from "./ProfileScreenStyle";
 import {
   Avatar,
@@ -28,7 +21,7 @@ export default function ProfileScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View
         style={{
           backgroundColor: "#EEDFDE",
@@ -129,6 +122,6 @@ export default function ProfileScreen() {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
