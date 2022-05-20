@@ -7,6 +7,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import as from "../../firebase";
 import { getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
 import Checkbox from 'expo-checkbox';
+import SurveyScreenResult from './SurveyScreenResult';
 
 
 
