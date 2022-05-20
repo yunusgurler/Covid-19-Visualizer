@@ -27,14 +27,14 @@ export const styles = StyleSheet.create({
       marginTop: 40,
     },
     signUpButton: {
-      backgroundColor: "#50BCFF",
+      backgroundColor: "#56D6FF",
       width: 200,
       padding: 15,
       borderRadius: 10,
       alignItems: "center",
     },
     loginButton: {
-      backgroundColor: "#50BCFF",
+      backgroundColor: "#56D6FF",
       width: 100,
       padding: 10,
       borderRadius: 10,
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     buttonOutline: {
       backgroundColor: "white",
       marginTop: 5,
-      borderColor: "#50BCFF",
+      borderColor: "#56D6FF",
       borderWidth: 2,
     },
     buttonText: {

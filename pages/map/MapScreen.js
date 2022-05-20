@@ -4,10 +4,10 @@ import MapView, { Marker, Heatmap, PROVIDER_GOOGLE } from "react-native-maps";
 
 const MapScreen = () => {
   const [mapRegion, setmapRegion] = useState({
-    latitude: 40.7143,
-    longitude: -74.0042,
-    latitudeDelta: 0.09,
-    longitudeDelta: 0.035,
+    latitude: 49.986111,
+    longitude: 20.061667,
+    latitudeDelta: 1,
+    longitudeDelta: 1,
   });
 
   const points = [
@@ -61,7 +61,11 @@ const MapScreen = () => {
       >
         <Heatmap
           points={points}
+<<<<<<< HEAD
           radius={80}
+=======
+          radius={60}
+>>>>>>> 219c932c3a7cbebc16f889a5b27e2e7f766b7e27
           opacity={1}
           gradient={{
             colors: ["#79BC6A", "#BBCF4C", "#EEC20B", "#F29305", "#E50000"],
