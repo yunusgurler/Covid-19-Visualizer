@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
+        marginTop: 10,
       },
       signUpButton: {
         backgroundColor: '#56D6FF',
@@ -24,12 +25,14 @@ export const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
+        marginTop: 10,
       },
       buttonOutline: {
         backgroundColor: 'white',
         marginTop: 5,
-        borderColor: '#50BCFF',
+        borderColor: '#56D6FF',
         borderWidth: 2,
+        marginTop: 10,
       },
       buttonText: {
         color: 'white',
@@ -52,7 +55,7 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         width: 200,
         height: 200, 
-        marginBottom: 400,
-        bottom:'15%',
+        marginBottom: 500,
+        top:'15%',
       }
 })
