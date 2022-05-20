@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-
+import MarkerMapScreen from "./pages/map/MarkerMapScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,7 +41,7 @@ function Home() {
           ),
         }}
         name="Map"
-        component={MapScreen}
+        component={MarkerMapScreen}
       />
       <Tab.Screen
         options={{
@@ -81,7 +81,7 @@ export default function App() {
           component={Home}
           options={{ headerShown: false }}
         />
-        
+
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login"

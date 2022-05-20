@@ -61,11 +61,11 @@ const MapScreen = () => {
       >
         <Heatmap
           points={points}
-          radius={40}
+          radius={80}
           opacity={1}
           gradient={{
             colors: ["#79BC6A", "#BBCF4C", "#EEC20B", "#F29305", "#E50000"],
-            values: [0, 0.25, 0.5, 0.75, 1],
+            values: [0, 0.5, 0.5, 0.75, 1],
             startPoints:
               Platform.OS === "ios"
                 ? [0.01, 0.04, 0.1, 0.45, 0.5]
@@ -80,7 +80,7 @@ const MapScreen = () => {
           }}
           maxIntensity={1}
           gradientSmoothing={10}
-          heatmapMode={"POINTS_DENSITY"}
+          heatmapMode={"POINTS_WEIGHT"}
         ></Heatmap>
       </MapView>
     </View>

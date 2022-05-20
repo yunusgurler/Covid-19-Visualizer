@@ -5,8 +5,8 @@ import { surveyQuestions, checkboxAnswers } from "./SurveyQuestions";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { MaterialIcons } from "@expo/vector-icons";
 import as from "../../firebase";
-import { getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
-
+import { getFirestore, setDoc, doc, updateDoc } from "firebase/firestore";
+import { TextInput } from "react-native-gesture-handler";
 
 const firestore = getFirestore();
 const surveyCollection = doc(firestore, "Survey DB", "Survey Answers");
@@ -21,25 +21,24 @@ const SurveyScreen = () => {
   ]);
   const [showSurveyResult, setShowSurveyResult] = useState(false);
 
-  
   const handleNextQuestion = () => {
     setQues(ques + 1);
   };
 
   const handleFirestoreAnswerYes = () => {
     updateDoc(surveyCollection, {
-      [ques + 1]: true
+      [ques + 1]: true,
     });
     setQues(ques + 1);
-  }
+  };
 
   const handleFirestoreAnswerNo = () => {
     updateDoc(surveyCollection, {
-      [ques + 1]: false
+      [ques + 1]: false,
     });
     setQues(ques + 1);
-  }
-  
+  };
+
   const handlePreviousQuestion = () => {
     setQues(ques - 1);
   };
@@ -64,7 +63,6 @@ const SurveyScreen = () => {
     });
   };
 
- 
   const handleRetakeSurvey = () => {
     setQues(0);
     setChecked([false, false, false, false, false]);
@@ -75,8 +73,6 @@ const SurveyScreen = () => {
   const handleSeeResults = () => {
     setShowSurveyResult(true);
   };
-
-
 
   return (
     <>
@@ -109,7 +105,7 @@ const SurveyScreen = () => {
               questions[ques].first === true &&
               questions[ques].checkboxAnswers.map((item, index) => (
                 <View key={index} style={styles.checkOption}>
-                  <input
+                  <TextInput
                     style={{ height: 30, width: 30 }}
                     type="checkbox"
                     checked={checkedFirstQuestion[index]}
@@ -123,7 +119,7 @@ const SurveyScreen = () => {
               questions[ques].first === false &&
               questions[ques].checkboxAnswers.map((item, index) => (
                 <View key={index} style={styles.checkOption}>
-                  <input
+                  <TextInput
                     style={{ height: 30, width: 30 }}
                     type="checkbox"
                     checked={checked[index]}
@@ -175,7 +171,6 @@ const SurveyScreen = () => {
                       size={24}
                       color="#1A759F"
                     />
-                    
                   </View>
                 </TouchableOpacity>
               )}
