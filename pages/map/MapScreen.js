@@ -61,11 +61,7 @@ const MapScreen = () => {
       >
         <Heatmap
           points={points}
-<<<<<<< HEAD
           radius={80}
-=======
-          radius={60}
->>>>>>> 219c932c3a7cbebc16f889a5b27e2e7f766b7e27
           opacity={1}
           gradient={{
             colors: ["#79BC6A", "#BBCF4C", "#EEC20B", "#F29305", "#E50000"],
