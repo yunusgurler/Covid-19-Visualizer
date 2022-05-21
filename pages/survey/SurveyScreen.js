@@ -5,13 +5,8 @@ import { surveyQuestions, checkboxAnswers } from "./SurveyQuestions";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { MaterialIcons } from "@expo/vector-icons";
 import as from "../../firebase";
-
 import { getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
 import Checkbox from 'expo-checkbox';
-import SurveyScreenResult from './SurveyScreenResult';
-
-
-
 
 const firestore = getFirestore();
 const surveyCollection = doc(firestore, "Survey DB", "Survey Answers");
@@ -31,13 +26,14 @@ const SurveyScreen = () => {
     updateDoc(surveyCollection, {
       [answerString]: [...checked],
     });
-  }, [checked]);
+  }, [checked])
 
   useEffect(() => {
     updateDoc(surveyCollection, {
       [answerString]: [...checkedFirstQuestion],
     });
-  }, [checkedFirstQuestion]);
+  }, [checkedFirstQuestion])
+
 
   const handleNextQuestion = () => {
     setQues(ques + 1);
@@ -45,17 +41,18 @@ const SurveyScreen = () => {
 
   const handleFirestoreAnswerYes = (score) => {
     updateDoc(surveyCollection, {
-      [ques + 1]: true,
+      [answerString]: { [answerString]: true, [scoreString]: questions[ques].score },
+
     });
     setQues(ques + 1);
-  };
+  }
 
   const handleFirestoreAnswerNo = (score) => {
     updateDoc(surveyCollection, {
-      [ques + 1]: false,
+      [answerString]: { [answerString]: false, [scoreString]: questions[ques].score }
     });
     setQues(ques + 1);
-  };
+  }
 
   const handlePreviousQuestion = () => {
     setQues(ques - 1);
@@ -70,9 +67,12 @@ const SurveyScreen = () => {
   const handleFirstCheckBox = (event, index) => {
     const _checked = [...checkedFirstQuestion];
 
-    _checked[index] = event;
+    _checked[index] = event
     setCheckedFirstQuestion(_checked);
+
+
   };
+
 
   const handleRetakeSurvey = () => {
     setQues(0);
@@ -84,6 +84,8 @@ const SurveyScreen = () => {
   const handleSeeResults = () => {
     setShowSurveyResult(true);
   };
+
+  
 
   return (
     <>
@@ -98,9 +100,7 @@ const SurveyScreen = () => {
             {questions[ques].multiAnswer === false && (
               <View style={styles.options}>
                 <TouchableOpacity
-                  onPress={() =>
-                    handleFirestoreAnswerYes(questions[ques].score)
-                  }
+                  onPress={() => handleFirestoreAnswerYes(questions[ques].score)}
                   style={styles.optionTouchable}
                 >
                   <Text style={styles.option}>Yes</Text>
@@ -117,12 +117,14 @@ const SurveyScreen = () => {
             {questions[ques].multiAnswer === true &&
               questions[ques].first === true &&
               questions[ques].checkboxAnswers.map((item, index) => (
+
                 <View key={index} style={styles.checkOption}>
-                  <TextInput
-                    style={{ height: 30, width: 30 }}
-                    type="checkbox"
-                    checked={checkedFirstQuestion[index]}
-                    onChange={(event) => handleFirstCheckBox(event, index)}
+                  <Checkbox
+                    style={{ height: 30, width: 30, marginRight: 6, }}
+                    color= {checked ? '#56D6FF' : '#000000'}
+                    value={checkedFirstQuestion[index]}
+                    onValueChange={(event) => handleFirstCheckBox(event, index)}
+                    
                   />
                   <Text style={{ fontSize: 20 }}>{item}</Text>
                 </View>
@@ -132,11 +134,10 @@ const SurveyScreen = () => {
               questions[ques].first === false &&
               questions[ques].checkboxAnswers.map((item, index) => (
                 <View key={index} style={styles.checkOption}>
-                  <TextInput
-                    style={{ height: 30, width: 30 }}
-                    type="checkbox"
-                    checked={checked[index]}
-                    onChange={(event) => handleCheckBox(event, index)}
+                  <Checkbox
+                    style={{ height: 30, width: 30, marginRight: 6, }}   
+                    value={checked[index]}
+                    onValueChange={(event) => handleCheckBox(event, index)}
                   />
                   <Text style={{ fontSize: 20 }}>{item}</Text>
                 </View>
@@ -184,6 +185,7 @@ const SurveyScreen = () => {
                       size={24}
                       color="#1A759F"
                     />
+
                   </View>
                 </TouchableOpacity>
               )}
