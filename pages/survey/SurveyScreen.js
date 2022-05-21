@@ -5,8 +5,13 @@ import { surveyQuestions, checkboxAnswers } from "./SurveyQuestions";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { MaterialIcons } from "@expo/vector-icons";
 import as from "../../firebase";
-import { getFirestore, setDoc, doc, updateDoc } from "firebase/firestore";
-import { TextInput } from "react-native-gesture-handler";
+
+import { getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
+import Checkbox from 'expo-checkbox';
+import SurveyScreenResult from './SurveyScreenResult';
+
+
+
 
 const firestore = getFirestore();
 const surveyCollection = doc(firestore, "Survey DB", "Survey Answers");
