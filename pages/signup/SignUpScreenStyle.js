@@ -20,6 +20,18 @@ export const styles = StyleSheet.create({
       marginTop: 5,
       margin: 15,
     },
+    inputError: {
+      width: "80%",
+      backgroundColor: "white",
+      borderColor: "red",
+      borderStyle: "solid",
+      borderWidth:1,
+      paddingHorizontal: 15,
+      paddingVertical: 10,
+      borderRadius: 10,
+      marginTop: 5,
+      margin: 15,
+    },
     buttonContainer: {
       width: "60%",
       justifyContent: "center",
