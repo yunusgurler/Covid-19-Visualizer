@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, StyleSheet, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
+
+
 const MarkerMapScreen = () => {
   const [mapRegion, setmapRegion] = useState({
     latitude: 37.78825,
@@ -9,6 +11,7 @@ const MarkerMapScreen = () => {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
+
   
  const mapstaticpoints = [
     {
@@ -45,6 +48,7 @@ const MarkerMapScreen = () => {
             coordinate={place.coordinate}
           />
         ))}
+
       </MapView>
     </View>
   );

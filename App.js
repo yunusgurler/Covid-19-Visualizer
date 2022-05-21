@@ -17,7 +17,6 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import MarkerMapScreen from "./pages/map/MarkerMapScreen";
 
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -82,7 +81,7 @@ export default function App() {
           component={Home}
           options={{ headerShown: false }}
         />
-        
+
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login"
