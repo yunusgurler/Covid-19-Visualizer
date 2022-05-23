@@ -16,6 +16,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import MarkerMapScreen from "./pages/map/MarkerMapScreen";
+import NewsScreen from "./pages/home/NewsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -31,8 +32,9 @@ function Home() {
           ),
         }}
         name="Home"
-        component={HomeScreen}
+        component={NewsScreen}
       />
+      
       <Tab.Screen
         options={{
           headerShown: false,
