@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 
 
@@ -12,8 +14,25 @@ const MarkerMapScreen = () => {
     longitudeDelta: 0.0421,
   });
 
+  const [dbState, setDbState] = useState([])
+
+
+  const db = getDatabase();
   
- const mapstaticpoints = [
+  useEffect(() => {
+    const covidRef = ref(db);
+    onValue(covidRef, (snapshot) => {
+      
+      const data = snapshot.val();
+      data.map((item) => (
+        console.log(item.Confirmed)
+      ))
+      setDbState(data)
+      
+    });
+  }, []);
+
+  const mapstaticpoints = [
     {
       key: 1,
       title: "test1",
@@ -29,23 +48,25 @@ const MarkerMapScreen = () => {
       title: "test2",
       coordinate: {
         latitude: 40.730610,
-        longitude: -73.935242,        
+        longitude: -73.935242,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
     },
   ];
-  
+
+
   return (
     <View style={styles.container}>
       <MapView
-      style={{ alignSelf: "stretch", height: "100%" }}
+        style={{ alignSelf: "stretch", height: "100%" }}
         region={mapRegion}>
-       {mapstaticpoints.map((place, i) => (
+        {dbState && dbState.map((place, i) => (
           <Marker
-            key={place.key}
-            title={place.title}
-            coordinate={place.coordinate}
+            key={i}
+            title={"Death: "+place.Confirmed}
+            coordinate={place.Coordinate}
+            
           />
         ))}
 
