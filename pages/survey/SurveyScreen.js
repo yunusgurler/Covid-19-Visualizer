@@ -15,9 +15,9 @@ const SurveyScreen = () => {
   const [ques, setQues] = useState(0);
   const [checked, setChecked] = useState([false, false, false, false, false]);
   const [checkedFirstQuestion, setCheckedFirstQuestion] = useState([
-    false,
-    false,
-    false,
+    {value: false, score: 10},
+    {value: false, score: 3},
+    {value: false, score: 0}
   ]);
   const [showSurveyResult, setShowSurveyResult] = useState(false);
   const answerString = "Answer " + [ques + 1];
@@ -28,14 +28,14 @@ const SurveyScreen = () => {
     });
   }, [checked]);
 
-  useEffect(() => {
-    updateDoc(surveyCollection, {
-      [answerString]: [...checkedFirstQuestion],
+  // useEffect(() => {
+  //   updateDoc(surveyCollection, {
+  //     [answerString]: [...checkedFirstQuestion],
 
-      //[scoreString]: questions[ques].checkboxAnswers,
-    });
-    console.log("checked first question ", checkedFirstQuestion);
-  }, [checkedFirstQuestion]);
+  //     // [scoreString]: questions[ques].checkboxAnswers[checkedFirstQuestion],
+  //   });
+    
+  // }, [checkedFirstQuestion]);
 
   const handleNextQuestion = () => {
     setQues(ques + 1);
@@ -45,7 +45,7 @@ const SurveyScreen = () => {
     updateDoc(surveyCollection, {
       [answerString]: {
         [answerString]: true,
-        //[scoreString]: questions[ques].score,
+        [scoreString]: questions[ques].score,
       },
     });
     setQues(ques + 1);
@@ -55,7 +55,7 @@ const SurveyScreen = () => {
     updateDoc(surveyCollection, {
       [answerString]: {
         [answerString]: false,
-        //[scoreString]: questions[ques].score,
+        [scoreString]: questions[ques].score,
       },
     });
     setQues(ques + 1);
@@ -75,6 +75,21 @@ const SurveyScreen = () => {
     const _checked = [...checkedFirstQuestion];
 
     _checked[index] = event;
+
+    updateDoc(surveyCollection, {
+      
+      
+      [answerString]: {
+        [answerString]: [...checkedFirstQuestion, questions[1].checkboxAnswers[index].score],
+        // [scoreString]: questions[1].checkboxAnswers[index].score,
+      },
+      
+
+      
+    });
+
+
+    console.log("checked first question " , questions[1].checkboxAnswers[index].score);
     setCheckedFirstQuestion(_checked);
   };
 
@@ -125,10 +140,10 @@ const SurveyScreen = () => {
                   <Checkbox
                     style={{ height: 30, width: 30, marginRight: 6 }}
                     color={checked ? "#56D6FF" : "#000000"}
-                    value={checkedFirstQuestion[index]}
+                    value={checkedFirstQuestion[index].value}
                     onValueChange={(event) => handleFirstCheckBox(event, index)}
                   />
-                  <Text style={{ fontSize: 20 }}>{item}</Text>
+                  <Text style={{ fontSize: 20 }}>{item.message}</Text>
                 </View>
               ))}
 
