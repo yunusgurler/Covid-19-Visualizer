@@ -3,6 +3,8 @@ import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
 import MapView, { Marker, Heatmap, PROVIDER_GOOGLE } from "react-native-maps";
 import { getDatabase, ref, onValue } from "firebase/database";
 import MapScreen from "./MapScreen";
+import { Ionicons } from "@expo/vector-icons";
+
 
 const MarkerMapScreen = () => {
   const [mapRegion, setmapRegion] = useState({
@@ -45,7 +47,6 @@ const MarkerMapScreen = () => {
             onPress={() => setMarkerOpen(!isMarkerOpen)}
             style={styles.loginButton}
           >
-            <Text style={styles.buttonText}>Marker Map</Text>
           </TouchableOpacity>
         </MapView>
       )}
@@ -53,7 +54,7 @@ const MarkerMapScreen = () => {
         onPress={() => setMarkerOpen(!isMarkerOpen)}
         style={styles.loginButton}
       >
-        <Text style={styles.buttonText}>Marker Map</Text>
+              <Ionicons name="map" size={48} color="#60C1E5" />
       </TouchableOpacity>
     </View>
   );
@@ -65,17 +66,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
+  
   loginButton: {
-    backgroundColor: "#56D6FF",
-    width: 100,
+    backgroundColor: ("#56D6FF", 0.70),
+    width: 80,
+    height:80,
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 65,
     alignItems: "center",
-    marginTop: 10,
+    justifyContent: "center",
+    marginTop: 650,
+    marginLeft: 25,
+    position: "absolute",
   },
 });
