@@ -12,9 +12,26 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/core";
+import { useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function ProfileScreen() {
+  const [loggedInUser, setLoggedInUser] = useState("");
+  const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
+
+  const auth = getAuth();
   const navigation = useNavigation();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const regex = /([^@]+)/;
+      if (user != "") {
+        const username = user.email.match(regex)[0];
+        setLoggedInUser(username);
+        setLoggedInUserEmail(user.email);
+      }
+    }
+  });
 
   const handleLogout = () => {
     navigation.replace("Login");
@@ -31,9 +48,7 @@ export default function ProfileScreen() {
         }}
       >
         <Image
-          source={{
-            uri: "https://avatars.githubusercontent.com/u/63549745?v=4",
-          }}
+          source={{ uri: "" }}
           style={{ width: 100, height: 100, marginTop: 120, borderRadius: 50 }}
         />
       </View>
@@ -51,9 +66,9 @@ export default function ProfileScreen() {
                   },
                 ]}
               >
-                Merve Baykara
+                {loggedInUser}
               </Title>
-              <Caption style={styles.usernameCaption}>@mervegb</Caption>
+              <Caption style={styles.usernameCaption}>@{loggedInUser}</Caption>
             </View>
           </View>
         </View>
@@ -79,14 +94,14 @@ export default function ProfileScreen() {
             <Icon name="email" color="black" size={20} />
             <TextInput
               style={{ color: "#777777", padding: 10 }}
-              placeholder=" xxx@gmail.com"
+              placeholder={loggedInUserEmail}
             />
           </View>
         </View>
 
         <View>
           <View style={styles.menuWrapper}>
-            <TouchableRipple onPress={() => {}}>
+            <TouchableRipple onPress={() => navigation.navigate("Survey")}>
               <View style={styles.menuItem}>
                 <AwesomeIcon name="heart" color="black" size={20} />
                 <Text style={styles.menuItemText}>Health Status</Text>
