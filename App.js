@@ -8,7 +8,6 @@ import SignUpScreen from "./pages/signup/SignUpScreen";
 import SurveyScreen from "./pages/survey/SurveyScreen";
 import ProfileScreen from "./pages/profile/ProfileScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "./pages/home/HomeScreen";
 import MapScreen from "./pages/map/MapScreen";
 import SplashScreen from "./pages/splash/SplashScreen";
 import { Ionicons } from "@expo/vector-icons";
@@ -34,7 +33,7 @@ function Home() {
         name="Home"
         component={NewsScreen}
       />
-      
+
       <Tab.Screen
         options={{
           headerShown: false,
