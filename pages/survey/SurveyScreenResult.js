@@ -1,15 +1,21 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 const SurveyScreenResult = () => {
   const [loggedInUser, setLoggedInUser] = useState("");
+  const [surveyAnswers, setSurveyAnswers] = useState([]);
   const auth = getAuth();
 
   useEffect(() => {
-    const items = getFirestore().collection("Survey DB").get();
-    console.log("items ", items);
+    const firestore = getFirestore();
+    const surveyCollection = doc(firestore, "Survey DB", "Survey Answers");
+
+    getDoc(surveyCollection).then(
+      (snapshot) => console.log(snapshot._document.data.value.mapValue.fields)
+      //setSurveyAnswers(snapshot._document.data.value.mapValue.fields)
+    );
   }, []);
 
   onAuthStateChanged(auth, (user) => {

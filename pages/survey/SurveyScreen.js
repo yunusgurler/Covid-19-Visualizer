@@ -31,7 +31,10 @@ const SurveyScreen = () => {
   useEffect(() => {
     updateDoc(surveyCollection, {
       [answerString]: [...checkedFirstQuestion],
+
+      //[scoreString]: questions[ques].checkboxAnswers,
     });
+    console.log("checked first question ", checkedFirstQuestion);
   }, [checkedFirstQuestion]);
 
   const handleNextQuestion = () => {
@@ -42,7 +45,7 @@ const SurveyScreen = () => {
     updateDoc(surveyCollection, {
       [answerString]: {
         [answerString]: true,
-        [scoreString]: questions[ques].score,
+        //[scoreString]: questions[ques].score,
       },
     });
     setQues(ques + 1);
@@ -52,7 +55,7 @@ const SurveyScreen = () => {
     updateDoc(surveyCollection, {
       [answerString]: {
         [answerString]: false,
-        [scoreString]: questions[ques].score,
+        //[scoreString]: questions[ques].score,
       },
     });
     setQues(ques + 1);
