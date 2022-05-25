@@ -41,10 +41,16 @@ const MarkerMapScreen = () => {
                 coordinate={place.Coordinate}
               />
             ))}
+          <TouchableOpacity
+            onPress={() => setMarkerOpen(!isMarkerOpen)}
+            style={styles.loginButton}
+          >
+            <Text style={styles.buttonText}>Marker Map</Text>
+          </TouchableOpacity>
         </MapView>
       )}
       <TouchableOpacity
-        onPress={() => setMarkerOpen(true)}
+        onPress={() => setMarkerOpen(!isMarkerOpen)}
         style={styles.loginButton}
       >
         <Text style={styles.buttonText}>Marker Map</Text>
