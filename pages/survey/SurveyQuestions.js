@@ -1,22 +1,22 @@
 export const surveyQuestions = [
   {
-    question: "Have you tested positive for COVID-19 in the past 10 days?",
+    question:
+      "Is there a place other than your home that you regularly go to more than 3 days a week? ",
     multiAnswer: false,
     score: 10,
   },
   {
-    question: "How do you feel yourself?",
+    question: "How would you rate your diet?",
     multiAnswer: true,
     checkboxAnswers: [
-      { message: "awful", score: 8 },
-      { message: "fine", score: 3 },
-      { message: "very good", score: 0 },
+      { message: "Unbalanced and malnourished.", score: 8 },
+      { message: "Neither good nor bad.", score: 3 },
+      { message: "Very good and balanced diet.", score: 0 },
     ],
     first: true,
-    score: 9,
   },
   {
-    question: "Are you currently awaiting results from a COVID-19 test?",
+    question: "Have you been indoors outside of your home in the last week?",
     multiAnswer: false,
     score: 8,
   },
@@ -26,7 +26,7 @@ export const surveyQuestions = [
     score: 7,
   },
   {
-    question: "How many doses have you been vaccinated?",
+    question: "Do you have a cough or shortness of breath?",
     multiAnswer: false,
     score: 6,
   },
@@ -46,15 +46,20 @@ export const surveyQuestions = [
     score: 3,
   },
   {
-    question: "Do you have loss of taste or smell",
+    question: "Do you have loss of taste or smell?",
     multiAnswer: false,
     score: 2,
   },
   {
-    question: "Do you suffer from any of the below diseases?",
+    question: "How many doses have you been vaccinated?",
     multiAnswer: true,
-    checkboxAnswers: ["cold", "fever", "cough", "headache", "muscle pain"],
+    checkboxAnswers: [
+      { message: "1", score: 7 },
+      { message: "2", score: 5 },
+      { message: "3", score: 3 },
+      { message: "3+", score: 2 },
+      { message: "Never", score: 10 },
+    ],
     first: false,
-    score: 1,
   },
 ];
