@@ -1,23 +1,30 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "./SurveyScreenStyle";
-import { surveyQuestions, checkboxAnswers } from "./SurveyQuestions";
+import { surveyQuestions } from "./SurveyQuestions";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  updateDoc,
+  deleteDoc,
+  setDoc,
+} from "firebase/firestore";
 import Checkbox from "expo-checkbox";
 import SurveyScreenResult from "./SurveyScreenResult";
 
 const firestore = getFirestore();
 const surveyCollection = doc(firestore, "Survey DB", "Survey Answers");
+
 const SurveyScreen = () => {
   const [questions, setQuestions] = useState(surveyQuestions);
   const [ques, setQues] = useState(0);
   const [checkedLastQuestion, setCheckedLastQuestion] = useState([]);
   const [checkedFirstQuestion, setCheckedFirstQuestion] = useState([]);
   const [showSurveyResult, setShowSurveyResult] = useState(false);
-  const answerString = "Answer " + [ques + 1];
-  const scoreString = "Score " + [ques + 1];
+  const answerString = "Answer" + [ques + 1];
+  const scoreString = "Score";
 
   const handleNextQuestion = () => {
     setQues(ques + 1);
@@ -34,12 +41,12 @@ const SurveyScreen = () => {
   };
 
   const handleFirestoreAnswerNo = (score) => {
-    updateDoc(surveyCollection, {
+    /*  updateDoc(surveyCollection, {
       [answerString]: {
         [answerString]: false,
         [scoreString]: questions[ques].score,
       },
-    });
+    }); */
     setQues(ques + 1);
   };
 
@@ -66,6 +73,14 @@ const SurveyScreen = () => {
     setCheckedLastQuestion([false, false, false, false, false]);
     setCheckedFirstQuestion([false, false, false]);
     setShowSurveyResult(false);
+
+    /* deleteDoc(surveyCollection)
+      .then(() => console.log("Document deleted"))
+      .catch((error) => console.error("Error deleting document", error));
+
+    setDoc(firestore, "Survey DB", "Survey Answers")
+      .then(() => console.log("ok"))
+      .catch((error) => console.log("error ", error)); */
   };
 
   const handleSeeResults = () => {
