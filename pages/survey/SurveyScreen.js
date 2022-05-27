@@ -63,7 +63,7 @@ const SurveyScreen = () => {
 
   const handleRetakeSurvey = () => {
     setQues(0);
-    setChecked([false, false, false, false, false]);
+    setCheckedLastQuestion([false, false, false, false, false]);
     setCheckedFirstQuestion([false, false, false]);
     setShowSurveyResult(false);
   };
