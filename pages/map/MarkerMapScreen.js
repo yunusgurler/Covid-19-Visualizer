@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Image } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
+import MapView, { Marker, Heatmap, PROVIDER_GOOGLE } from "react-native-maps";
 import { getDatabase, ref, onValue } from "firebase/database";
+import MapScreen from "./MapScreen";
+import { Ionicons } from "@expo/vector-icons";
+
 
 const MarkerMapScreen = () => {
   const [mapRegion, setmapRegion] = useState({
@@ -12,33 +15,47 @@ const MarkerMapScreen = () => {
   });
 
   const [dbState, setDbState] = useState([]);
-
+  const [isMarkerOpen, setMarkerOpen] = useState(false);
   const db = getDatabase();
 
   useEffect(() => {
     const covidRef = ref(db);
     onValue(covidRef, (snapshot) => {
       const data = snapshot.val();
-      data.map((item) => console.log(item.Confirmed));
       setDbState(data);
     });
   }, []);
 
   return (
     <View style={styles.container}>
-      <MapView
-        style={{ alignSelf: "stretch", height: "100%" }}
-        region={mapRegion}
+      {!isMarkerOpen ? (
+        <MapScreen />
+      ) : (
+        <MapView
+          style={{ alignSelf: "stretch", height: "100%" }}
+          region={mapRegion}
+        >
+          {dbState &&
+            dbState.map((place, i) => (
+              <Marker
+                key={i}
+                title={"Death: " + place.Confirmed}
+                coordinate={place.Coordinate}
+              />
+            ))}
+          <TouchableOpacity
+            onPress={() => setMarkerOpen(!isMarkerOpen)}
+            style={styles.loginButton}
+          >
+          </TouchableOpacity>
+        </MapView>
+      )}
+      <TouchableOpacity
+        onPress={() => setMarkerOpen(!isMarkerOpen)}
+        style={styles.loginButton}
       >
-        {dbState &&
-          dbState.map((place, i) => (
-            <Marker
-              key={i}
-              title={"Death: " + place.Confirmed}
-              coordinate={place.Coordinate}
-            />
-          ))}
-      </MapView>
+              <Ionicons name="map" size={48} color="#60C1E5" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -48,5 +65,18 @@ export default MarkerMapScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  
+  loginButton: {
+    backgroundColor: ("#56D6FF", 0.70),
+    width: 80,
+    height:80,
+    padding: 15,
+    borderRadius: 65,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 650,
+    marginLeft: 25,
+    position: "absolute",
   },
 });
