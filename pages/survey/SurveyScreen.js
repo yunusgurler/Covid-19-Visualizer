@@ -1,41 +1,30 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "./SurveyScreenStyle";
-import { surveyQuestions, checkboxAnswers } from "./SurveyQuestions";
+import { surveyQuestions } from "./SurveyQuestions";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  updateDoc,
+  deleteDoc,
+  setDoc,
+} from "firebase/firestore";
 import Checkbox from "expo-checkbox";
 import SurveyScreenResult from "./SurveyScreenResult";
 
 const firestore = getFirestore();
 const surveyCollection = doc(firestore, "Survey DB", "Survey Answers");
+
 const SurveyScreen = () => {
   const [questions, setQuestions] = useState(surveyQuestions);
   const [ques, setQues] = useState(0);
-  const [checked, setChecked] = useState([false, false, false, false, false]);
-  const [checkedFirstQuestion, setCheckedFirstQuestion] = useState([
-    {value: false, score: 10},
-    {value: false, score: 3},
-    {value: false, score: 0}
-  ]);
+  const [checkedLastQuestion, setCheckedLastQuestion] = useState([]);
+  const [checkedFirstQuestion, setCheckedFirstQuestion] = useState([]);
   const [showSurveyResult, setShowSurveyResult] = useState(false);
-  const answerString = "Answer " + [ques + 1];
-  const scoreString = "Score " + [ques + 1];
-  useEffect(() => {
-    updateDoc(surveyCollection, {
-      [answerString]: [...checked],
-    });
-  }, [checked]);
-
-  // useEffect(() => {
-  //   updateDoc(surveyCollection, {
-  //     [answerString]: [...checkedFirstQuestion],
-
-  //     // [scoreString]: questions[ques].checkboxAnswers[checkedFirstQuestion],
-  //   });
-    
-  // }, [checkedFirstQuestion]);
+  const answerString = "Answer" + [ques + 1];
+  const scoreString = "Score";
 
   const handleNextQuestion = () => {
     setQues(ques + 1);
@@ -52,12 +41,12 @@ const SurveyScreen = () => {
   };
 
   const handleFirestoreAnswerNo = (score) => {
-    updateDoc(surveyCollection, {
+    /*  updateDoc(surveyCollection, {
       [answerString]: {
         [answerString]: false,
         [scoreString]: questions[ques].score,
       },
-    });
+    }); */
     setQues(ques + 1);
   };
 
@@ -65,39 +54,33 @@ const SurveyScreen = () => {
     setQues(ques - 1);
   };
 
-  const handleCheckBox = (event, index) => {
-    const _checked = [...checked];
-    _checked[index] = event;
-    setChecked(_checked);
+  const handleLastCheckBox = (checkboxAnswers) => {
+    setCheckedLastQuestion(checkboxAnswers.message);
+    updateDoc(surveyCollection, {
+      [answerString]: [checkboxAnswers],
+    });
   };
 
-  const handleFirstCheckBox = (event, index) => {
-    const _checked = [...checkedFirstQuestion];
-
-    _checked[index] = event;
-
+  const handleFirstCheckBox = (checkboxAnswers) => {
+    setCheckedFirstQuestion(checkboxAnswers.message);
     updateDoc(surveyCollection, {
-      
-      
-      [answerString]: {
-        [answerString]: [...checkedFirstQuestion, questions[1].checkboxAnswers[index].score],
-        // [scoreString]: questions[1].checkboxAnswers[index].score,
-      },
-      
-
-      
+      [answerString]: [checkboxAnswers],
     });
-
-
-    console.log("checked first question " , questions[1].checkboxAnswers[index].score);
-    setCheckedFirstQuestion(_checked);
   };
 
   const handleRetakeSurvey = () => {
     setQues(0);
-    setChecked([false, false, false, false, false]);
+    setCheckedLastQuestion([false, false, false, false, false]);
     setCheckedFirstQuestion([false, false, false]);
     setShowSurveyResult(false);
+
+    /* deleteDoc(surveyCollection)
+      .then(() => console.log("Document deleted"))
+      .catch((error) => console.error("Error deleting document", error));
+
+    setDoc(firestore, "Survey DB", "Survey Answers")
+      .then(() => console.log("ok"))
+      .catch((error) => console.log("error ", error)); */
   };
 
   const handleSeeResults = () => {
@@ -133,30 +116,33 @@ const SurveyScreen = () => {
               </View>
             )}
 
+            {/* First Checkbox */}
             {questions[ques].multiAnswer === true &&
               questions[ques].first === true &&
               questions[ques].checkboxAnswers.map((item, index) => (
                 <View key={index} style={styles.checkOption}>
                   <Checkbox
                     style={{ height: 30, width: 30, marginRight: 6 }}
-                    color={checked ? "#56D6FF" : "#000000"}
-                    value={checkedFirstQuestion[index].value}
-                    onValueChange={(event) => handleFirstCheckBox(event, index)}
+                    color={checkedFirstQuestion ? "#56D6FF" : "#000000"}
+                    value={checkedFirstQuestion === item.message}
+                    onValueChange={() => handleFirstCheckBox(item)}
                   />
                   <Text style={{ fontSize: 20 }}>{item.message}</Text>
                 </View>
               ))}
 
+            {/* Last Checkbox */}
             {questions[ques].multiAnswer === true &&
               questions[ques].first === false &&
               questions[ques].checkboxAnswers.map((item, index) => (
                 <View key={index} style={styles.checkOption}>
                   <Checkbox
+                    color={checkedLastQuestion ? "#56D6FF" : "#000000"}
                     style={{ height: 30, width: 30, marginRight: 6 }}
-                    value={checked[index]}
-                    onValueChange={(event) => handleCheckBox(event, index)}
+                    value={checkedLastQuestion === item.message}
+                    onValueChange={() => handleLastCheckBox(item)}
                   />
-                  <Text style={{ fontSize: 20 }}>{item}</Text>
+                  <Text style={{ fontSize: 20 }}>{item.message}</Text>
                 </View>
               ))}
 
