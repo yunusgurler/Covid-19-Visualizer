@@ -81,6 +81,8 @@ const SurveyScreen = ({ route }) => {
     setCheckedFirstQuestion([false, false, false]);
     setShowSurveyResult(false);
 
+    const firestore = getFirestore();
+
     deleteDoc(surveyCollection)
       .then(() => console.log("Document deleted"))
       .catch((error) => console.error("Error deleting document", error));

@@ -1,4 +1,4 @@
-import { doc, getDoc, getFirestore, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
@@ -291,7 +291,6 @@ const MyContributionGraph = () => {
 const NewsScreen = ({ route }) => {
   const [loggedInUser, setLoggedInUser] = useState(route.params.user);
   const [username, setUsername] = useState("");
-  const [score, setScore] = useState("");
 
   useEffect(() => {
     const regex = /([^@]+)/;
@@ -299,21 +298,7 @@ const NewsScreen = ({ route }) => {
       const username = loggedInUser?.email.match(regex)[0];
       setUsername(username);
     }
-
-    const firestore = getFirestore();
-    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
-
-    /* surveyCollection.onSnapshot((snapshot) => {
-      console.log("snap shot ", snapshot);
-    }); */
-
-    getDoc(surveyCollection).then((snapshot) =>
-      setScore(
-        snapshot._document.data.value.mapValue.fields.Answer11.mapValue.fields
-          .Score.stringValue
-      )
-    );
-  }, [loggedInUser, score]);
+  }, [loggedInUser]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -321,7 +306,7 @@ const NewsScreen = ({ route }) => {
         <View style={styles.container}>
           <View>
             <Text>Hello {username}!</Text>
-            <Text>Score is {score}</Text>
+            <Text>Score is </Text>
             {/*Example of Bezier LineChart*/}
             <MyBezierLineChart />
             {/*Example of LineChart*/}
