@@ -85,7 +85,7 @@ const SurveyScreen = ({ route }) => {
       .then(() => console.log("Document deleted"))
       .catch((error) => console.error("Error deleting document", error));
 
-    setDoc(doc(firestore, "Survey DB", "Survey Answers"), {});
+    setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
   };
 
   const handleSeeResults = () => {
