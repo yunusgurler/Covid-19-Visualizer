@@ -57,9 +57,7 @@ const SurveyScreen = ({ route }) => {
     setQues(ques + 1);
   };
 
-  const handlePreviousQuestion = () => {
-    setQues(ques - 1);
-  };
+  
 
   const handleLastCheckBox = (checkboxAnswers) => {
     setCheckedLastQuestion(checkboxAnswers.message);
@@ -154,28 +152,6 @@ const SurveyScreen = ({ route }) => {
               ))}
 
             <View style={styles.bottom}>
-              {ques > 0 && (
-                <TouchableOpacity
-                  onPress={handlePreviousQuestion}
-                  style={styles.button}
-                >
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <MaterialIcons
-                      name="navigate-before"
-                      size={24}
-                      color="#1A759F"
-                    />
-                    <Text style={styles.buttonText}> Previous </Text>
-                  </View>
-                </TouchableOpacity>
-              )}
               {questions.length !== ques && (
                 <TouchableOpacity
                   style={styles.button}
