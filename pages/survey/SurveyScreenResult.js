@@ -59,7 +59,7 @@ const SurveyScreenResult = () => {
     <View style={styles.container}>
       <View>
         <Text style={styles.paragraph}>
-          Hello {loggedInUser}, your risk is % {finalScore * 1.6}
+          Hello {loggedInUser}, your risk is % {(finalScore * 1.6).toFixed(2)}
         </Text>
       </View>
     </View>

@@ -74,13 +74,11 @@ const SurveyScreen = () => {
     setCheckedFirstQuestion([false, false, false]);
     setShowSurveyResult(false);
 
-    /* deleteDoc(surveyCollection)
+    deleteDoc(surveyCollection)
       .then(() => console.log("Document deleted"))
       .catch((error) => console.error("Error deleting document", error));
 
-    setDoc(firestore, "Survey DB", "Survey Answers")
-      .then(() => console.log("ok"))
-      .catch((error) => console.log("error ", error)); */
+    setDoc(doc(firestore, "Survey DB", "Survey Answers"), {});
   };
 
   const handleSeeResults = () => {
