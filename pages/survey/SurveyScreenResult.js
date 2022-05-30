@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   getFirestore,
   doc,
@@ -7,11 +7,13 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import ScoreContext from "../../store/ScoreProvider";
 
 const SurveyScreenResult = (props) => {
   const [finalScore, setFinalScore] = useState(0);
   const [loggedInUser, setLoggedInUser] = useState(props.user);
   const [username, setUsername] = useState("");
+  const scoreCtx = useContext(ScoreContext);
 
   useEffect(() => {
     const firestore = getFirestore();
@@ -53,6 +55,7 @@ const SurveyScreenResult = (props) => {
     });
 
     let result = arrayValueScore + mapValueScore;
+    scoreCtx.scoreHandler((result * 1.6).toFixed(2));
 
     const firestore = getFirestore();
     const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);

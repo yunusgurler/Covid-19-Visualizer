@@ -1,5 +1,5 @@
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   SafeAreaView,
   Text,
@@ -16,6 +16,7 @@ import {
   ContributionGraph,
   StackedBarChart,
 } from "react-native-chart-kit";
+import ScoreContext from "../../store/ScoreProvider";
 
 const MyBezierLineChart = () => {
   return (
@@ -291,6 +292,7 @@ const MyContributionGraph = () => {
 const NewsScreen = ({ route }) => {
   const [loggedInUser, setLoggedInUser] = useState(route.params.user);
   const [username, setUsername] = useState("");
+  const scoreCtx = useContext(ScoreContext);
 
   useEffect(() => {
     const regex = /([^@]+)/;
@@ -306,7 +308,7 @@ const NewsScreen = ({ route }) => {
         <View style={styles.container}>
           <View>
             <Text>Hello {username}!</Text>
-            <Text>Score is </Text>
+            <Text>Score is {scoreCtx.score}</Text>
             {/*Example of Bezier LineChart*/}
             <MyBezierLineChart />
             {/*Example of LineChart*/}
