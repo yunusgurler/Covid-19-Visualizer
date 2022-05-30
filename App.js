@@ -20,7 +20,9 @@ import NewsScreen from "./pages/home/NewsScreen";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Home() {
+function Home({ route, navigation }) {
+  const { user } = route.params;
+
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -30,6 +32,7 @@ function Home() {
             <Ionicons name="home" color={color} size={size} />
           ),
         }}
+        initialParams={{ user }}
         name="Home"
         component={NewsScreen}
       />
@@ -41,6 +44,7 @@ function Home() {
             <FontAwesome name="map-marker" size={size} color={color} />
           ),
         }}
+        initialParams={{ user }}
         name="Map"
         component={MarkerMapScreen}
       />
@@ -52,6 +56,7 @@ function Home() {
           ),
         }}
         name="Survey"
+        initialParams={{ user }}
         component={SurveyScreen}
       />
       <Tab.Screen
@@ -61,6 +66,7 @@ function Home() {
             <Feather name="user" size={size} color={color} />
           ),
         }}
+        initialParams={{ user }}
         name="Profile"
         component={ProfileScreen}
       />

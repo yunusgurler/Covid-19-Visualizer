@@ -14,15 +14,22 @@ import {
 import Checkbox from "expo-checkbox";
 import SurveyScreenResult from "./SurveyScreenResult";
 
-const firestore = getFirestore();
-const surveyCollection = doc(firestore, "Survey DB", "Survey Answers");
-
-const SurveyScreen = () => {
+const SurveyScreen = ({ route }) => {
   const [questions, setQuestions] = useState(surveyQuestions);
   const [ques, setQues] = useState(0);
   const [checkedLastQuestion, setCheckedLastQuestion] = useState([]);
   const [checkedFirstQuestion, setCheckedFirstQuestion] = useState([]);
   const [showSurveyResult, setShowSurveyResult] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(route.params.user);
+  const [surveyCollection, setSurveyCollection] = useState();
+
+  useEffect(() => {
+    const firestore = getFirestore();
+    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
+    setSurveyCollection(surveyCollection);
+    setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
+  }, [loggedInUser]);
+
   const answerString = "Answer" + [ques + 1];
   const scoreString = "Score";
 
@@ -194,7 +201,7 @@ const SurveyScreen = () => {
         ) : (
           <View style={styles.thanksView}>
             {showSurveyResult ? (
-              <SurveyScreenResult />
+              <SurveyScreenResult user={loggedInUser} />
             ) : (
               <>
                 <MaterialIcon name="check-circle" color="#67C4C4" size={80} />

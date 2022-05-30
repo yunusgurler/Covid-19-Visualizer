@@ -1,21 +1,33 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
-const SurveyScreenResult = () => {
-  const [loggedInUser, setLoggedInUser] = useState("");
+const SurveyScreenResult = (props) => {
   const [finalScore, setFinalScore] = useState(0);
-  const auth = getAuth();
+  const [loggedInUser, setLoggedInUser] = useState(props.user);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const firestore = getFirestore();
-    const surveyCollection = doc(firestore, "Survey DB", "Survey Answers");
+    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
 
     getDoc(surveyCollection).then((snapshot) =>
       handleCalculateScore(snapshot._document.data.value.mapValue.fields)
     );
-  }, []);
+    if (loggedInUser) {
+      const regex = /([^@]+)/;
+      if (loggedInUser != "") {
+        const username = loggedInUser?.email.match(regex)[0];
+        setUsername(username);
+      }
+    }
+  }, [loggedInUser]);
 
   const handleCalculateScore = (data) => {
     let arrayValueScore = 0;
@@ -42,24 +54,26 @@ const SurveyScreenResult = () => {
 
     let result = arrayValueScore + mapValueScore;
 
+    const firestore = getFirestore();
+    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
+
+    const answerString = "Answer" + 11;
+    const scoreString = "Score";
+
+    updateDoc(surveyCollection, {
+      [answerString]: {
+        [answerString]: true,
+        [scoreString]: (result * 1.6).toFixed(2),
+      },
+    });
     setFinalScore(result);
   };
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const regex = /([^@]+)/;
-      if (user != "") {
-        const username = user.email.match(regex)[0];
-        setLoggedInUser(username);
-      }
-    }
-  });
 
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.paragraph}>
-          Hello {loggedInUser}, your risk is % {(finalScore * 1.6).toFixed(2)}
+          Hello {username}, your risk is % {(finalScore * 1.6).toFixed(2)}
         </Text>
       </View>
     </View>
