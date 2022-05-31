@@ -12,8 +12,6 @@ import {
   LineChart,
   BarChart,
   PieChart,
-  ProgressChart,
-  ContributionGraph,
   StackedBarChart,
 } from "react-native-chart-kit";
 import ScoreContext from "../../store/ScoreProvider";
@@ -96,32 +94,7 @@ const MyLineChart = () => {
   );
 };
 
-const MyProgressChart = () => {
-  return (
-    <>
-      <Text style={styles.header}>Progress Chart</Text>
-      <ProgressChart
-        data={[0.4, 0.6, 0.8]}
-        width={Dimensions.get("window").width - 16}
-        height={220}
-        chartConfig={{
-          backgroundColor: "#1cc910",
-          backgroundGradientFrom: "#eff3ff",
-          backgroundGradientTo: "#efefef",
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
-    </>
-  );
-};
+
 
 const MyBarChart = () => {
   return (
@@ -192,37 +165,146 @@ const MyStackedBarChart = () => {
   );
 };
 
-const MyPieChart = () => {
+const MyPieChart1 = () => {
   return (
     <>
-      <Text style={styles.header}>Pie Chart</Text>
+      <Text style={styles.header}>Diet Pie Chart</Text>
       <PieChart
         data={[
           {
-            name: "Seoul",
-            population: 21500000,
-            color: "rgba(131, 167, 234, 1)",
+            name: "good and balanced diet.",
+            population: 192,
+            color: "red",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "Toronto",
-            population: 2800000,
-            color: "#F00",
+            name: "Neither good nor bad.",
+            population: 46,
+            color: "orange",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "New York",
-            population: 8538000,
-            color: "#ffffff",
+            name: "unbalanced and malnourished",
+            population: 80,
+            color: "blue",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+       
+        ]}
+        width={Dimensions.get("window").width - 16}
+        height={220}
+        chartConfig={{
+          backgroundColor: "#1cc910",
+          backgroundGradientFrom: "#eff3ff",
+          backgroundGradientTo: "#efefef",
+          decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute //for the absolute number remove if you want percentage
+      />
+    </>
+  );
+};
+
+const MyPieChart7 = () => {
+  return (
+    <>
+      <Text style={styles.header}>Vaccine Pie Chart</Text>
+      <PieChart
+        data={[
+          {
+            name: "1 dose of vaccine",
+            population: 10,
+            color: "red",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "Moscow",
-            population: 11920000,
-            color: "rgb(0, 0, 255)",
+            name: "2 doses of vaccine",
+            population: 297,
+            color: "orange",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+          {
+            name: "3 doses of vaccine",
+            population: 80,
+            color: "yellow",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+          {
+          name: "3+ doses of vaccine",
+          population: 2,
+          color: "green",
+          legendFontColor: "#7F7F7F",
+          legendFontSize: 15,
+        },
+        {
+          name: "Never",
+          population: 9,
+          color: "blue",
+          legendFontColor: "#7F7F7F",
+          legendFontSize: 15,
+        },
+       
+        ]}
+        width={Dimensions.get("window").width - 16}
+        height={220}
+        chartConfig={{
+          backgroundColor: "#1cc910",
+          backgroundGradientFrom: "#eff3ff",
+          backgroundGradientTo: "#efefef",
+          decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute //for the absolute number remove if you want percentage
+      />
+    </>
+  );
+};
+
+const MyPieChart = () => {
+  return (
+    <>
+      <Text style={styles.header}>Social Rate Pie Chart</Text>
+      <Text>Social events more than 3 days</Text>
+      <PieChart
+        data={[
+          {
+            name: "NO",
+            population: 177,
+            color: "red",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+          {
+            name: "YES",
+            population: 141,
+            color: "blue",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
@@ -252,26 +334,27 @@ const MyPieChart = () => {
   );
 };
 
-const MyContributionGraph = () => {
+const MyPieChart2 = () => {
   return (
     <>
-      <Text style={styles.header}>Contribution Graph</Text>
-      <ContributionGraph
-        values={[
-          { date: "2019-01-02", count: 1 },
-          { date: "2019-01-03", count: 2 },
-          { date: "2019-01-04", count: 3 },
-          { date: "2019-01-05", count: 4 },
-          { date: "2019-01-06", count: 5 },
-          { date: "2019-01-30", count: 2 },
-          { date: "2019-01-31", count: 3 },
-          { date: "2019-03-01", count: 2 },
-          { date: "2019-04-02", count: 4 },
-          { date: "2019-03-05", count: 2 },
-          { date: "2019-02-30", count: 4 },
+      <Text style={styles.header}>Smoker Pie Chart</Text>
+      <PieChart
+        data={[
+          {
+            name: "NO",
+            population: 182,
+            color: "red",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+          {
+            name: "YES",
+            population: 136,
+            color: "blue",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
         ]}
-        endDate={new Date("2019-04-01")}
-        numDays={105}
         width={Dimensions.get("window").width - 16}
         height={220}
         chartConfig={{
@@ -284,10 +367,206 @@ const MyContributionGraph = () => {
             borderRadius: 16,
           },
         }}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute //for the absolute number remove if you want percentage
       />
     </>
   );
 };
+
+
+
+const MyPieChart3 = () => {
+  return (
+    <>
+      <Text style={styles.header}>Cough Breath Pie Chart</Text>
+      <PieChart
+        data={[
+          {
+            name: "NO",
+            population: 291,
+            color: "red",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+          {
+            name: "YES",
+            population: 27,
+            color: "blue",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+        ]}
+        width={Dimensions.get("window").width - 16}
+        height={220}
+        chartConfig={{
+          backgroundColor: "#1cc910",
+          backgroundGradientFrom: "#eff3ff",
+          backgroundGradientTo: "#efefef",
+          decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute //for the absolute number remove if you want percentage
+      />
+    </>
+  );
+};
+
+const MyPieChart4 = () => {
+  return (
+    <>
+      <Text style={styles.header}>Public Transportation Pie Chart</Text>
+      <PieChart
+        data={[
+          {
+            name: "NO",
+            population: 116,
+            color: "red",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+          {
+            name: "YES",
+            population: 202,
+            color: "blue",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+        ]}
+        width={Dimensions.get("window").width - 16}
+        height={220}
+        chartConfig={{
+          backgroundColor: "#1cc910",
+          backgroundGradientFrom: "#eff3ff",
+          backgroundGradientTo: "#efefef",
+          decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute //for the absolute number remove if you want percentage
+      />
+    </>
+  );
+};
+
+const MyPieChart5 = () => {
+  return (
+    <>
+      <Text style={styles.header}>Chronological illness Pie Chart</Text>
+      <PieChart
+        data={[
+          {
+            name: "NO",
+            population: 304,
+            color: "red",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+          {
+            name: "YES",
+            population: 14,
+            color: "blue",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+        ]}
+        width={Dimensions.get("window").width - 16}
+        height={220}
+        chartConfig={{
+          backgroundColor: "#1cc910",
+          backgroundGradientFrom: "#eff3ff",
+          backgroundGradientTo: "#efefef",
+          decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute //for the absolute number remove if you want percentage
+      />
+    </>
+  );
+};
+
+const MyPieChart6 = () => {
+  return (
+    <>
+      <Text style={styles.header}>Loss of taste or smell Pie Chart</Text>
+      <PieChart
+        data={[
+          {
+            name: "NO",
+            population: 307,
+            color: "red",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+          {
+            name: "YES",
+            population: 11,
+            color: "blue",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+        ]}
+        width={Dimensions.get("window").width - 16}
+        height={220}
+        chartConfig={{
+          backgroundColor: "#1cc910",
+          backgroundGradientFrom: "#eff3ff",
+          backgroundGradientTo: "#efefef",
+          decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute //for the absolute number remove if you want percentage
+      />
+    </>
+  );
+};
+
+
 
 const NewsScreen = ({ route }) => {
   const [loggedInUser, setLoggedInUser] = useState(route.params.user);
@@ -303,26 +582,39 @@ const NewsScreen = ({ route }) => {
   }, [loggedInUser]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.total}>
+       <View style={styles.userInfo}>
+         <View>
+          <Text>Hello {username}                                         <Text>Score is {scoreCtx.score}</Text></Text>
+          </View>
+        </View>
       <ScrollView>
         <View style={styles.container}>
           <View>
-            <Text>Hello {username}!</Text>
-            <Text>Score is {scoreCtx.score}</Text>
             {/*Example of Bezier LineChart*/}
             <MyBezierLineChart />
             {/*Example of LineChart*/}
             <MyLineChart />
-            {/*Example of Progress Chart*/}
-            <MyProgressChart />
             {/*Example of Bar Chart*/}
             <MyBarChart />
             {/*Example of StackedBar Chart*/}
             <MyStackedBarChart />
             {/*Example of Pie Chart*/}
             <MyPieChart />
-            {/*Example of Contribution Chart*/}
-            <MyContributionGraph />
+            {/*Example of Pie Chart1*/}
+            {/*Example of Pie Chart7*/}
+            <MyPieChart7 />
+            <MyPieChart1 />
+             {/*Example of Pie Chart2*/}
+            <MyPieChart2 />
+            {/*Example of Pie Chart3*/}
+            <MyPieChart3 />
+            {/*Example of Pie Chart4*/}
+            <MyPieChart4 />
+            {/*Example of Pie Chart5*/}
+            <MyPieChart5 />
+             {/*Example of Pie Chart6*/}
+            <MyPieChart6 />
           </View>
         </View>
       </ScrollView>
@@ -333,6 +625,11 @@ const NewsScreen = ({ route }) => {
 export default NewsScreen;
 
 const styles = StyleSheet.create({
+total:{
+   flex: 1,
+   backgroundColor:"white", 
+},
+
   container: {
     flex: 1,
     backgroundColor: "white",
@@ -346,5 +643,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 16,
     marginTop: 16,
+  },
+  userInfo: {
+    display: "flex",
+    backgroundColor: "white",
+    fontSize: 24,
+    padding: 16,
+    marginTop: 16, 
+    fontSize:24
+
   },
 });
