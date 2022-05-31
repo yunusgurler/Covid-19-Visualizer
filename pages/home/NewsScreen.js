@@ -20,6 +20,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import GeolocationHandler from "./GeolocationHandler";
 
 const MyBezierLineChart = () => {
   return (
@@ -589,6 +590,7 @@ const NewsScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.total}>
+      <GeolocationHandler />
       <View style={styles.userInfo}>
         <View>
           <Text style={styles.textstyle}>
