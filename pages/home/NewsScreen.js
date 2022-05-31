@@ -1,4 +1,3 @@
-import { doc, getDoc, getFirestore } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import {
   SafeAreaView,
@@ -14,7 +13,14 @@ import {
   PieChart,
   StackedBarChart,
 } from "react-native-chart-kit";
-import ScoreContext from "../../store/ScoreProvider";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const MyBezierLineChart = () => {
   return (
@@ -93,8 +99,6 @@ const MyLineChart = () => {
     </>
   );
 };
-
-
 
 const MyBarChart = () => {
   return (
@@ -192,7 +196,6 @@ const MyPieChart1 = () => {
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
-       
         ]}
         width={Dimensions.get("window").width - 16}
         height={220}
@@ -247,20 +250,19 @@ const MyPieChart7 = () => {
             legendFontSize: 15,
           },
           {
-          name: "3+ doses of vaccine",
-          population: 2,
-          color: "green",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15,
-        },
-        {
-          name: "Never",
-          population: 9,
-          color: "blue",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15,
-        },
-       
+            name: "3+ doses of vaccine",
+            population: 2,
+            color: "green",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
+          {
+            name: "Never",
+            population: 9,
+            color: "blue",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          },
         ]}
         width={Dimensions.get("window").width - 16}
         height={220}
@@ -379,8 +381,6 @@ const MyPieChart2 = () => {
     </>
   );
 };
-
-
 
 const MyPieChart3 = () => {
   return (
@@ -566,28 +566,38 @@ const MyPieChart6 = () => {
   );
 };
 
-
-
 const NewsScreen = ({ route }) => {
   const [loggedInUser, setLoggedInUser] = useState(route.params.user);
   const [username, setUsername] = useState("");
-  const scoreCtx = useContext(ScoreContext);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const regex = /([^@]+)/;
     if (loggedInUser != "") {
       const username = loggedInUser?.email.match(regex)[0];
       setUsername(username);
+      const firestore = getFirestore();
+      const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
+
+      getDoc(surveyCollection).then((snapshot) =>
+        setScore(
+          snapshot._document.data.value.mapValue.fields?.ResultScore.mapValue
+            ?.fields.Score?.stringValue
+        )
+      );
     }
-  }, [loggedInUser]);
+  }, [loggedInUser, route]);
 
   return (
     <SafeAreaView style={styles.total}>
-       <View style={styles.userInfo}>
-         <View>
-          <Text style = {styles.textstyle}>Hello {(username).charAt(0).toUpperCase()+username.slice(1)}            <Text>Score is {scoreCtx.score}</Text></Text>
-          </View>
+      <View style={styles.userInfo}>
+        <View>
+          <Text style={styles.textstyle}>
+            Hello {username.charAt(0).toUpperCase() + username.slice(1)}
+          </Text>
+          <Text style={styles.textstyle}>Score {score}</Text>
         </View>
+      </View>
       <ScrollView>
         <View style={styles.container}>
           <View>
@@ -605,7 +615,7 @@ const NewsScreen = ({ route }) => {
             {/*Example of Pie Chart7*/}
             <MyPieChart7 />
             <MyPieChart1 />
-             {/*Example of Pie Chart2*/}
+            {/*Example of Pie Chart2*/}
             <MyPieChart2 />
             {/*Example of Pie Chart3*/}
             <MyPieChart3 />
@@ -613,7 +623,7 @@ const NewsScreen = ({ route }) => {
             <MyPieChart4 />
             {/*Example of Pie Chart5*/}
             <MyPieChart5 />
-             {/*Example of Pie Chart6*/}
+            {/*Example of Pie Chart6*/}
             <MyPieChart6 />
           </View>
         </View>
@@ -625,10 +635,10 @@ const NewsScreen = ({ route }) => {
 export default NewsScreen;
 
 const styles = StyleSheet.create({
-total:{
-   flex: 1,
-   backgroundColor:"white", 
-},
+  total: {
+    flex: 1,
+    backgroundColor: "white",
+  },
 
   container: {
     flex: 1,
@@ -646,14 +656,21 @@ total:{
   },
   userInfo: {
     display: "flex",
-    backgroundColor: "white",
+
     fontSize: 24,
     padding: 16,
-    marginTop: 16, 
-    fontSize:24
-
+    marginTop: 16,
+    fontSize: 24,
+    backgroundColor: "#c6f0fe",
+    borderRadius: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 15,
+    color: "#ffffff",
   },
-  textstyle:{
-    fontSize:24,
+  textstyle: {
+    fontSize: 24,
+    marginRight: 10,
+    color: "gray",
   },
 });

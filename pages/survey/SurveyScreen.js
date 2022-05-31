@@ -57,8 +57,6 @@ const SurveyScreen = ({ route }) => {
     setQues(ques + 1);
   };
 
-  
-
   const handleLastCheckBox = (checkboxAnswers) => {
     setCheckedLastQuestion(checkboxAnswers.message);
     updateDoc(surveyCollection, {
