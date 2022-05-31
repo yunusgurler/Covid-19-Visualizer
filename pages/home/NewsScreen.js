@@ -585,7 +585,7 @@ const NewsScreen = ({ route }) => {
     <SafeAreaView style={styles.total}>
        <View style={styles.userInfo}>
          <View>
-          <Text>Hello {username}                                         <Text>Score is {scoreCtx.score}</Text></Text>
+          <Text style = {styles.textstyle}>Hello {(username).charAt(0).toUpperCase()+username.slice(1)}            <Text>Score is {scoreCtx.score}</Text></Text>
           </View>
         </View>
       <ScrollView>
@@ -652,5 +652,8 @@ total:{
     marginTop: 16, 
     fontSize:24
 
+  },
+  textstyle:{
+    fontSize:24,
   },
 });
