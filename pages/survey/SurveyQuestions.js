@@ -15,6 +15,7 @@ export const surveyQuestions = [
     ],
     first: true,
   },
+
   {
     question: "Have you been indoors outside of your home in the last week?",
     multiAnswer: false,

@@ -14,15 +14,22 @@ import {
 import Checkbox from "expo-checkbox";
 import SurveyScreenResult from "./SurveyScreenResult";
 
-const firestore = getFirestore();
-const surveyCollection = doc(firestore, "Survey DB", "Survey Answers");
-
-const SurveyScreen = () => {
+const SurveyScreen = ({ route }) => {
   const [questions, setQuestions] = useState(surveyQuestions);
   const [ques, setQues] = useState(0);
   const [checkedLastQuestion, setCheckedLastQuestion] = useState([]);
   const [checkedFirstQuestion, setCheckedFirstQuestion] = useState([]);
   const [showSurveyResult, setShowSurveyResult] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(route.params.user);
+  const [surveyCollection, setSurveyCollection] = useState();
+
+  useEffect(() => {
+    const firestore = getFirestore();
+    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
+    setSurveyCollection(surveyCollection);
+    setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
+  }, [loggedInUser]);
+
   const answerString = "Answer" + [ques + 1];
   const scoreString = "Score";
 
@@ -50,10 +57,6 @@ const SurveyScreen = () => {
     setQues(ques + 1);
   };
 
-  const handlePreviousQuestion = () => {
-    setQues(ques - 1);
-  };
-
   const handleLastCheckBox = (checkboxAnswers) => {
     setCheckedLastQuestion(checkboxAnswers.message);
     updateDoc(surveyCollection, {
@@ -74,13 +77,13 @@ const SurveyScreen = () => {
     setCheckedFirstQuestion([false, false, false]);
     setShowSurveyResult(false);
 
-    /* deleteDoc(surveyCollection)
+    const firestore = getFirestore();
+
+    deleteDoc(surveyCollection)
       .then(() => console.log("Document deleted"))
       .catch((error) => console.error("Error deleting document", error));
 
-    setDoc(firestore, "Survey DB", "Survey Answers")
-      .then(() => console.log("ok"))
-      .catch((error) => console.log("error ", error)); */
+    setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
   };
 
   const handleSeeResults = () => {
@@ -147,28 +150,6 @@ const SurveyScreen = () => {
               ))}
 
             <View style={styles.bottom}>
-              {ques > 0 && (
-                <TouchableOpacity
-                  onPress={handlePreviousQuestion}
-                  style={styles.button}
-                >
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <MaterialIcons
-                      name="navigate-before"
-                      size={24}
-                      color="#1A759F"
-                    />
-                    <Text style={styles.buttonText}> Previous </Text>
-                  </View>
-                </TouchableOpacity>
-              )}
               {questions.length !== ques && (
                 <TouchableOpacity
                   style={styles.button}
@@ -196,7 +177,7 @@ const SurveyScreen = () => {
         ) : (
           <View style={styles.thanksView}>
             {showSurveyResult ? (
-              <SurveyScreenResult />
+              <SurveyScreenResult user={loggedInUser} />
             ) : (
               <>
                 <MaterialIcon name="check-circle" color="#67C4C4" size={80} />

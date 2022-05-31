@@ -24,7 +24,7 @@ const LoginScreen = () => {
             const user = userCredential.user;
             const accessToken = user?.accessToken;
             if (accessToken && accessToken != "") {
-              navigation.replace("Home");
+              navigation.replace("Home", { user });
             }
           })
           .catch((error) => {

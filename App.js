@@ -1,6 +1,4 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./pages/login/LoginScreen";
@@ -8,7 +6,6 @@ import SignUpScreen from "./pages/signup/SignUpScreen";
 import SurveyScreen from "./pages/survey/SurveyScreen";
 import ProfileScreen from "./pages/profile/ProfileScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MapScreen from "./pages/map/MapScreen";
 import SplashScreen from "./pages/splash/SplashScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -20,7 +17,9 @@ import NewsScreen from "./pages/home/NewsScreen";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Home() {
+function Home({ route, navigation }) {
+  const { user } = route.params;
+
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -30,6 +29,7 @@ function Home() {
             <Ionicons name="home" color={color} size={size} />
           ),
         }}
+        initialParams={{ user }}
         name="Home"
         component={NewsScreen}
       />
@@ -41,6 +41,7 @@ function Home() {
             <FontAwesome name="map-marker" size={size} color={color} />
           ),
         }}
+        initialParams={{ user }}
         name="Map"
         component={MarkerMapScreen}
       />
@@ -52,6 +53,7 @@ function Home() {
           ),
         }}
         name="Survey"
+        initialParams={{ user }}
         component={SurveyScreen}
       />
       <Tab.Screen
@@ -61,6 +63,7 @@ function Home() {
             <Feather name="user" size={size} color={color} />
           ),
         }}
+        initialParams={{ user }}
         name="Profile"
         component={ProfileScreen}
       />
@@ -100,11 +103,3 @@ export default function App() {
 if (process.env.NODE_ENV === "debug") {
   setDebugLevel(1);
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
