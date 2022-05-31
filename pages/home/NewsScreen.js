@@ -20,7 +20,6 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const MyBezierLineChart = () => {
   return (
