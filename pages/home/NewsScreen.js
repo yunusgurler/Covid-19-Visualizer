@@ -590,7 +590,6 @@ const NewsScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.total}>
-      <GeolocationHandler />
       <View style={styles.userInfo}>
         <View>
           <Text style={styles.textstyle}>

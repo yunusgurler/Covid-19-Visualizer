@@ -2,15 +2,16 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
 
-const GeolocationHandler = () => {
+const GeolocationHandler = (props) => {
   const [locationServiceEnabled, setLocationServiceEnabled] = useState(false);
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
-    "Wait, we are fetching you location..."
+    "Searching for your location..."
   );
 
   useEffect(() => {
     CheckIfLocationEnabled();
     GetCurrentLocation();
+    props.passData(displayCurrentAddress);
   }, []);
 
   const CheckIfLocationEnabled = async () => {
@@ -59,7 +60,7 @@ const GeolocationHandler = () => {
 
   return (
     <View>
-      <Text>GeolocationHandler {displayCurrentAddress}</Text>
+      <Text>{displayCurrentAddress}</Text>
     </View>
   );
 };

@@ -1,21 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Text} from "react-native";
-import MapView, { Marker, Heatmap, PROVIDER_GOOGLE, Callout } from "react-native-maps";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import { getDatabase, ref, onValue } from "firebase/database";
 import MapScreen from "./MapScreen";
 import { Ionicons } from "@expo/vector-icons";
+import GeolocationHandler from "../home/GeolocationHandler";
 
 const MarkerMapScreen = () => {
   const [mapRegion, setmapRegion] = useState({
-    latitude:13.406,
-    longitude:123.3753,
-    latitudeDelta:0.005,
-    longitudeDelta:0.005
+    latitude: 13.406,
+    longitude: 123.3753,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
   });
 
   const [dbState, setDbState] = useState([]);
   const [isMarkerOpen, setMarkerOpen] = useState(false);
   const db = getDatabase();
+  const [displayCurrentAddress, setDisplayCurrentAddress] = useState("");
+
+  const passData = (data) => {
+    Alert.alert("Please Wait!", data, [
+      {
+        text: "Cancel",
+        style: "Cancel",
+      },
+      { text: "Okay" },
+    ]);
+    setDisplayCurrentAddress(data);
+  };
 
   useEffect(() => {
     const covidRef = ref(db);
@@ -27,31 +40,7 @@ const MarkerMapScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* <MapView
-      style={styles.map}
-      initialRegion={{
-        latitude:13.406,
-        longitude:123.3753,
-        latitudeDelta:0.005,
-        longitudeDelta:0.005
-      }}
-      >
-        <Marker 
-        coordinate={{ latitude: 13.406, longitude:123.3753 }}
-        // title="test"
-        // description="test description"
-        >
-          <Callout>
-            <Text>This is a Callout</Text>
-          </Callout>
-          <Circle 
-          center={{ latitude: 13.406, longitude: 123.3753}} 
-          radius = {100}
-          />
-        </Marker>
-      </MapView> */}
-
-
+      <GeolocationHandler passData={passData} />
       {!isMarkerOpen ? (
         <MapScreen />
       ) : (
@@ -70,15 +59,14 @@ const MarkerMapScreen = () => {
           <TouchableOpacity
             onPress={() => setMarkerOpen(!isMarkerOpen)}
             style={styles.loginButton}
-          >
-          </TouchableOpacity>
+          ></TouchableOpacity>
         </MapView>
       )}
       <TouchableOpacity
         onPress={() => setMarkerOpen(!isMarkerOpen)}
         style={styles.loginButton}
       >
-              <Ionicons name="map" size={48} color="#60C1E5" />
+        <Ionicons name="map" size={48} color="#60C1E5" />
       </TouchableOpacity>
     </View>
   );
@@ -90,11 +78,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  
+
   loginButton: {
-    backgroundColor: ("#56D6FF", 0.70),
+    backgroundColor: ("#56D6FF", 0.7),
     width: 80,
-    height:80,
+    height: 80,
     padding: 15,
     borderRadius: 65,
     alignItems: "center",
