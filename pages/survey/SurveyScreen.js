@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "./SurveyScreenStyle";
 import { surveyQuestions } from "./SurveyQuestions";
@@ -23,21 +23,20 @@ const SurveyScreen = ({ route }) => {
   const [loggedInUser, setLoggedInUser] = useState(route.params.user);
   const [surveyCollection, setSurveyCollection] = useState();
 
+  const answerString = "Answer" + [ques + 1];
+  const scoreString = "Score";
+
   useEffect(() => {
     const firestore = getFirestore();
     const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
     setSurveyCollection(surveyCollection);
-    //setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
   }, [loggedInUser]);
-
-  const answerString = "Answer" + [ques + 1];
-  const scoreString = "Score";
 
   const handleNextQuestion = () => {
     setQues(ques + 1);
   };
 
-  const handleFirestoreAnswerYes = (score) => {
+  const handleFirestoreAnswerYes = () => {
     updateDoc(surveyCollection, {
       [answerString]: {
         [answerString]: true,
@@ -47,13 +46,7 @@ const SurveyScreen = ({ route }) => {
     setQues(ques + 1);
   };
 
-  const handleFirestoreAnswerNo = (score) => {
-    /*  updateDoc(surveyCollection, {
-      [answerString]: {
-        [answerString]: false,
-        [scoreString]: questions[ques].score,
-      },
-    }); */
+  const handleFirestoreAnswerNo = () => {
     setQues(ques + 1);
   };
 
@@ -72,18 +65,40 @@ const SurveyScreen = ({ route }) => {
   };
 
   const handleRetakeSurvey = () => {
-    setQues(0);
-    setCheckedLastQuestion([false, false, false, false, false]);
-    setCheckedFirstQuestion([false, false, false]);
-    setShowSurveyResult(false);
+    const endSurveyDate = new Date();
+    const loggedInDate = new Date(loggedInUser?.metadata.lastSignInTime);
+    if (dateDiff(endSurveyDate, loggedInDate) > 14) {
+      setQues(0);
+      setCheckedLastQuestion([false, false, false, false, false]);
+      setCheckedFirstQuestion([false, false, false]);
+      setShowSurveyResult(false);
 
-    const firestore = getFirestore();
+      const firestore = getFirestore();
 
-    deleteDoc(surveyCollection)
-      .then(() => console.log("Document deleted"))
-      .catch((error) => console.error("Error deleting document", error));
+      deleteDoc(surveyCollection)
+        .then(() => console.log("Document deleted"))
+        .catch((error) => console.error("Error deleting document", error));
 
-    setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
+      setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
+    } else
+      Alert.alert("Please Wait!", "Please wait 14 days to retake the survey", [
+        {
+          text: "Cancel",
+          style: "Cancel",
+        },
+        { text: "Okay" },
+      ]);
+  };
+
+  const dateDiff = (date1, date2) => {
+    let diffTime = 0;
+    if (date1 > date2) {
+      diffTime = Math.abs(date1 - date2);
+    } else {
+      diffTime = Math.abs(date2 - date1);
+    }
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays - 1;
   };
 
   const handleSeeResults = () => {

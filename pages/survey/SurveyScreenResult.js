@@ -1,18 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 
 const SurveyScreenResult = (props) => {
   const [finalScore, setFinalScore] = useState(0);
   const [loggedInUser, setLoggedInUser] = useState(props.user);
   const [username, setUsername] = useState("");
-  const [loggedInTime, setLoggedInTime] = useState("");
 
   useEffect(() => {
     const firestore = getFirestore();
@@ -26,9 +19,6 @@ const SurveyScreenResult = (props) => {
       if (loggedInUser != "") {
         const username = loggedInUser?.email.match(regex)[0];
         setUsername(username);
-        setLoggedInTime(loggedInUser?.metadata.lastSignInTime);
-
-
       }
     }
   }, [loggedInUser]);
@@ -36,11 +26,13 @@ const SurveyScreenResult = (props) => {
   const handleCalculateScore = (data) => {
     let arrayValueScore = 0;
     let mapValueScore = 0;
-    
+
     Object.values(data).map((item, index) => {
       if (Object.values(item)[0]?.fields) {
         let mapScore = Object.values(item)[0]?.fields?.Score?.integerValue;
-        mapValueScore += parseInt(mapScore);
+        if (mapScore != undefined) {
+          mapValueScore += parseInt(mapScore);
+        }
       }
 
       let valuesArray = Object.values(item)[0]?.values;
@@ -63,25 +55,13 @@ const SurveyScreenResult = (props) => {
 
     const scoreString = "Score";
 
+    setFinalScore(result);
+
     updateDoc(surveyCollection, {
       ResultScore: {
         [scoreString]: (result * 1.6).toFixed(2),
       },
     });
-    const surveytime =  new Date()
-    const currentDate = surveytime.getDate()
-    const currentMonth = surveytime.getMonth()+1
-    const currentYear = surveytime.getFullYear()
-    const currentSurveyTime = currentDate + "/" + currentMonth + "/" + currentYear
-    console.log(currentSurveyTime);
-
-    const surveyCountDown = (loggedInTime - surveytime)
-    console.log(surveyCountDown);
-    console.log(surveytime);
-    console.log(loggedInTime);
-    setFinalScore(result);
-
-
   };
 
   return (
