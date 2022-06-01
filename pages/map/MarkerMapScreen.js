@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
-import MapView, { Marker, Heatmap, PROVIDER_GOOGLE } from "react-native-maps";
+import { View, StyleSheet, Image, TouchableOpacity, Text} from "react-native";
+import MapView, { Marker, Heatmap, PROVIDER_GOOGLE, Callout } from "react-native-maps";
 import { getDatabase, ref, onValue } from "firebase/database";
 import MapScreen from "./MapScreen";
 import { Ionicons } from "@expo/vector-icons";
 
-
 const MarkerMapScreen = () => {
   const [mapRegion, setmapRegion] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitude:13.406,
+    longitude:123.3753,
+    latitudeDelta:0.005,
+    longitudeDelta:0.005
   });
 
   const [dbState, setDbState] = useState([]);
@@ -28,6 +27,31 @@ const MarkerMapScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* <MapView
+      style={styles.map}
+      initialRegion={{
+        latitude:13.406,
+        longitude:123.3753,
+        latitudeDelta:0.005,
+        longitudeDelta:0.005
+      }}
+      >
+        <Marker 
+        coordinate={{ latitude: 13.406, longitude:123.3753 }}
+        // title="test"
+        // description="test description"
+        >
+          <Callout>
+            <Text>This is a Callout</Text>
+          </Callout>
+          <Circle 
+          center={{ latitude: 13.406, longitude: 123.3753}} 
+          radius = {100}
+          />
+        </Marker>
+      </MapView> */}
+
+
       {!isMarkerOpen ? (
         <MapScreen />
       ) : (
@@ -75,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 65,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 650,
+    marginTop: "117%",
     marginLeft: 25,
     position: "absolute",
   },

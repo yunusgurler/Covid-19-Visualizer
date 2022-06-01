@@ -66,7 +66,7 @@ export default function ProfileScreen() {
                   },
                 ]}
               >
-                {loggedInUser}
+                {loggedInUser.charAt(0).toUpperCase() + loggedInUser.slice(1)}
               </Title>
               <Caption style={styles.usernameCaption}>@{loggedInUser}</Caption>
             </View>
