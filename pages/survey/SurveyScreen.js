@@ -27,7 +27,7 @@ const SurveyScreen = ({ route }) => {
     const firestore = getFirestore();
     const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
     setSurveyCollection(surveyCollection);
-    setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
+    //setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
   }, [loggedInUser]);
 
   const answerString = "Answer" + [ques + 1];
