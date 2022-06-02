@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
+import { Ionicons } from "@expo/vector-icons";
 
 const SurveyScreenResult = (props) => {
   const [finalScore, setFinalScore] = useState(0);
@@ -67,8 +68,27 @@ const SurveyScreenResult = (props) => {
   return (
     <View style={styles.container}>
       <View>
+        {(finalScore * 1.6).toFixed(2) > 50 ? (
+          <Ionicons
+            style={{ display: "flex", justifyContent: "center" }}
+            name="sad-outline"
+            size={80}
+            color="black"
+          />
+        ) : (
+          <Ionicons
+            style={{ display: "flex", justifyContent: "center" }}
+            name="happy-outline"
+            size={80}
+            color="black"
+          />
+        )}
+
         <Text style={styles.paragraph}>
-          Hello {username}, your risk is % {(finalScore * 1.6).toFixed(2)}
+          Hello {username.charAt(0).toUpperCase() + username.slice(1)}
+        </Text>
+        <Text style={styles.covid}>
+          Your Covid-19 risk is % {(finalScore * 1.6).toFixed(2)}
         </Text>
       </View>
     </View>
@@ -83,13 +103,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 40,
-
+    width: 320,
     shadowColor: "#470000",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
     elevation: 10,
     marginTop: "20%",
-    backgroundColor: "azure",
+    backgroundColor: "#c6f0fe",
     borderRadius: 20,
   },
   paragraph: {
@@ -98,5 +118,8 @@ const styles = StyleSheet.create({
     color: "#616161",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  covid: {
+    fontSize: 21,
   },
 });

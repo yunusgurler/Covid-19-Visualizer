@@ -28,6 +28,7 @@ const SurveyScreen = ({ route }) => {
 
   useEffect(() => {
     const firestore = getFirestore();
+    setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
     const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
     setSurveyCollection(surveyCollection);
   }, [loggedInUser]);
@@ -47,6 +48,12 @@ const SurveyScreen = ({ route }) => {
   };
 
   const handleFirestoreAnswerNo = () => {
+    updateDoc(surveyCollection, {
+      [answerString]: {
+        [answerString]: false,
+        [scoreString]: 0,
+      },
+    });
     setQues(ques + 1);
   };
 

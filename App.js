@@ -22,7 +22,7 @@ function Home({ route, navigation }) {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen
+      {/*    <Tab.Screen
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
@@ -32,8 +32,8 @@ function Home({ route, navigation }) {
         initialParams={{ user }}
         name="Home"
         component={NewsScreen}
-      />
-
+      /> */}
+      {/* 
       <Tab.Screen
         options={{
           headerShown: false,
@@ -44,7 +44,7 @@ function Home({ route, navigation }) {
         initialParams={{ user }}
         name="Map"
         component={MarkerMapScreen}
-      />
+      /> */}
       <Tab.Screen
         options={{
           headerShown: false,
