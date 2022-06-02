@@ -20,8 +20,10 @@ import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import GeolocationHandler from "../home/GeolocationHandler";
+
+
 export default function ProfileScreen() {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
@@ -42,18 +44,19 @@ export default function ProfileScreen() {
   });
 
   const passData = (data) => {
-    Alert.alert("Please Wait!", data, [
-      {
-        text: "Cancel",
-        style: "Cancel",
-      },
-      { text: "Okay" },
-    ]);
     setDisplayCurrentAddress(data);
   };
 
   const handleLogout = () => {
-    navigation.replace("Login");
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      navigation.replace("Login");
+      // Sign-out successful.
+    }).catch((error) => {
+      console.log("Sign out unsuccessful")
+      // An error happened.
+    });
+   
   };
 
   return (
@@ -114,25 +117,6 @@ export default function ProfileScreen() {
               </View>
             </TouchableRipple>
           </View>
-
-          <View style={styles.menuWrapper}>
-            <TouchableRipple onPress={() => {}}>
-              <View style={styles.menuItem}>
-                <Icon name="help-circle-outline" color="black" size={20} />
-                <Text style={styles.menuItemText}>Help</Text>
-              </View>
-            </TouchableRipple>
-          </View>
-
-          <View style={styles.menuWrapper}>
-            <TouchableRipple onPress={() => {}}>
-              <View style={styles.menuItem}>
-                <MaterialIcon name="notifications" color="black" size={20} />
-                <Text style={styles.menuItemText}>Notifications</Text>
-              </View>
-            </TouchableRipple>
-          </View>
-
           <View style={styles.menuWrapper}>
             <TouchableRipple onPress={handleLogout}>
               <View style={styles.menuItem}>
