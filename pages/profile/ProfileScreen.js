@@ -23,7 +23,6 @@ import { useState } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import GeolocationHandler from "../home/GeolocationHandler";
 
-
 export default function ProfileScreen() {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
@@ -49,14 +48,15 @@ export default function ProfileScreen() {
 
   const handleLogout = () => {
     const auth = getAuth();
-    signOut(auth).then(() => {
-      navigation.replace("Login");
-      // Sign-out successful.
-    }).catch((error) => {
-      console.log("Sign out unsuccessful")
-      // An error happened.
-    });
-   
+    signOut(auth)
+      .then(() => {
+        navigation.replace("Login");
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        console.log("Sign out unsuccessful");
+        // An error happened.
+      });
   };
 
   return (
@@ -99,7 +99,9 @@ export default function ProfileScreen() {
         <View style={styles.userInfo}>
           <View style={styles.row}>
             <Icon name="map-marker-radius" color="black" size={20} />
-            <Text style={styles.emailPadding}>{displayCurrentAddress}</Text>
+            <Text style={styles.emailPadding}>
+              {displayCurrentAddress != undefined && displayCurrentAddress}
+            </Text>
           </View>
 
           <View style={styles.row}>

@@ -12,7 +12,7 @@ const GeolocationHandler = (props) => {
     CheckIfLocationEnabled();
     GetCurrentLocation();
     props.passData(displayCurrentAddress);
-  }, []);
+  }, [displayCurrentAddress]);
 
   const CheckIfLocationEnabled = async () => {
     let enabled = await Location.hasServicesEnabledAsync();
