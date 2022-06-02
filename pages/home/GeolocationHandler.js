@@ -58,11 +58,7 @@ const GeolocationHandler = (props) => {
     }
   };
 
-  return (
-    <View>
-      <Text>{displayCurrentAddress}</Text>
-    </View>
-  );
+  return <></>;
 };
 
 export default GeolocationHandler;

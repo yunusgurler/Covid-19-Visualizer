@@ -1,5 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, View, Image, TextInput } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  View,
+  Image,
+  TextInput,
+  Alert,
+} from "react-native";
 import { styles } from "./ProfileScreenStyle";
 import {
   Avatar,
@@ -14,8 +21,8 @@ import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { GeolocationHandler } from "../home/GeolocationHandler";
-export default function ProfileScreen(props) {
+import GeolocationHandler from "../home/GeolocationHandler";
+export default function ProfileScreen() {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
 
@@ -51,6 +58,7 @@ export default function ProfileScreen(props) {
 
   return (
     <View style={styles.container}>
+      <GeolocationHandler passData={passData} />
       <View
         style={{
           backgroundColor: "#EEDFDE",
@@ -88,14 +96,12 @@ export default function ProfileScreen(props) {
         <View style={styles.userInfo}>
           <View style={styles.row}>
             <Icon name="map-marker-radius" color="black" size={20} />
-            <GeolocationHandler passData={passData} />
-           
+            <Text style={styles.emailPadding}>{displayCurrentAddress}</Text>
           </View>
 
           <View style={styles.row}>
             <Icon name="email" color="black" size={20} />
             <Text style={styles.emailPadding}>{loggedInUserEmail}</Text>
-
           </View>
         </View>
 
