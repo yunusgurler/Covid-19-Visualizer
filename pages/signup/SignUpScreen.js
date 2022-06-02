@@ -51,6 +51,7 @@ const HomeScreen = () => {
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Name"
+          placeholderTextColor= {'gray'}
           value={name}
           onFocus={() => setIsFocused(true)}
           onChangeText={(text) => setName(text)}
@@ -62,6 +63,7 @@ const HomeScreen = () => {
 
         <TextInput
           placeholder="Email"
+          placeholderTextColor={'gray'}
           value={email}
           onFocus={() => setIsFocused(true)}
           onChangeText={(text) => setEmail(text)}
@@ -73,6 +75,7 @@ const HomeScreen = () => {
 
         <TextInput
           placeholder="Password"
+          placeholderTextColor={'gray'}
           value={password}
           onFocus={() => setIsFocused(true)}
           onChangeText={(text) => setPassword(text)}

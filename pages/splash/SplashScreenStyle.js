@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 100,
       },
       signUpButton: {
         backgroundColor: '#56D6FF',

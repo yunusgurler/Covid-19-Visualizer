@@ -42,4 +42,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 26,
   },
+  emailPadding: {
+    paddingLeft: 10,
+  },
 });

@@ -1,11 +1,5 @@
 import {
-    KeyboardAvoidingView,
     StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-    Image,
   } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -23,7 +17,7 @@ export const styles = StyleSheet.create({
       paddingHorizontal: 15,
       paddingVertical: 10,
       borderRadius: 10,
-      marginTop: 5,
+      marginTop: 15,
       width: "60%",
     },
     buttonContainer: {
@@ -41,7 +35,7 @@ export const styles = StyleSheet.create({
     },
     signUpButton: {
       backgroundColor: "#56D6FF",
-      width: 100,
+      width: 200,
       padding: 10,
       borderRadius: 10,
       alignItems: "center",
@@ -70,5 +64,6 @@ export const styles = StyleSheet.create({
     logo: {
       width: 200,
       height: 200,
+      bottom: '5%',
     }
   });

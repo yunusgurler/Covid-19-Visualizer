@@ -595,7 +595,7 @@ const NewsScreen = ({ route }) => {
           <Text style={styles.textstyle}>
             Hello {username.charAt(0).toUpperCase() + username.slice(1)}
           </Text>
-          <Text style={styles.textstyle}>Score {score}</Text>
+          <Text style={styles.textstyle}>Your Covid-19 risk is {score}%</Text>
         </View>
       </View>
       <ScrollView>
@@ -669,7 +669,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   textstyle: {
-    fontSize: 24,
+    fontSize: 20,
     marginRight: 10,
     color: "gray",
   },

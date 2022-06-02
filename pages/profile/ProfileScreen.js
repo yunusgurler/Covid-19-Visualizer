@@ -14,13 +14,14 @@ import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-export default function ProfileScreen() {
+import { GeolocationHandler } from "../home/GeolocationHandler";
+export default function ProfileScreen(props) {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
 
   const auth = getAuth();
   const navigation = useNavigation();
+  const [displayCurrentAddress, setDisplayCurrentAddress] = useState("");
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -32,6 +33,17 @@ export default function ProfileScreen() {
       }
     }
   });
+
+  const passData = (data) => {
+    Alert.alert("Please Wait!", data, [
+      {
+        text: "Cancel",
+        style: "Cancel",
+      },
+      { text: "Okay" },
+    ]);
+    setDisplayCurrentAddress(data);
+  };
 
   const handleLogout = () => {
     navigation.replace("Login");
@@ -76,26 +88,14 @@ export default function ProfileScreen() {
         <View style={styles.userInfo}>
           <View style={styles.row}>
             <Icon name="map-marker-radius" color="black" size={20} />
-            <TextInput
-              style={{ color: "#777777", padding: 10 }}
-              placeholder="Istanbul/Turkey"
-            />
-          </View>
-
-          <View style={styles.row}>
-            <Icon name="phone" color="black" size={20} />
-            <TextInput
-              style={{ color: "#777777", padding: 10 }}
-              placeholder="+90 xxxxxx"
-            />
+            <GeolocationHandler passData={passData} />
+           
           </View>
 
           <View style={styles.row}>
             <Icon name="email" color="black" size={20} />
-            <TextInput
-              style={{ color: "#777777", padding: 10 }}
-              placeholder={loggedInUserEmail}
-            />
+            <Text style={styles.emailPadding}>{loggedInUserEmail}</Text>
+
           </View>
         </View>
 
