@@ -17,7 +17,6 @@ import {
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
-import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
@@ -51,11 +50,9 @@ export default function ProfileScreen() {
     signOut(auth)
       .then(() => {
         navigation.replace("Login");
-        // Sign-out successful.
       })
       .catch((error) => {
         console.log("Sign out unsuccessful");
-        // An error happened.
       });
   };
 
@@ -64,16 +61,27 @@ export default function ProfileScreen() {
       <GeolocationHandler passData={passData} />
       <View
         style={{
-          backgroundColor: "#EEDFDE",
+          backgroundColor: "#c6f0fe",
           width: "100%",
           height: 200,
           alignItems: "center",
         }}
       >
-        <Image
-          source={{ uri: "" }}
-          style={{ width: 100, height: 100, marginTop: 120, borderRadius: 50 }}
-        />
+        <View>
+          <AwesomeIcon
+            name="user-circle"
+            color="#191919"
+            size={100}
+            style={{
+              width: 100,
+              height: 100,
+              marginTop: 85,
+              marginLeft: 20,
+              alignItems: "center",
+              borderRadius: 50,
+            }}
+          />
+        </View>
       </View>
 
       <View>
