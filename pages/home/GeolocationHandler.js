@@ -4,16 +4,14 @@ import * as Location from "expo-location";
 
 const GeolocationHandler = (props) => {
   const [locationServiceEnabled, setLocationServiceEnabled] = useState(false);
-  const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
-    "Searching for your location..."
-  );
-  const [currentCords, setCurrentCords] = useState();
+  const [displayCurrentAddress, setDisplayCurrentAddress] = useState(0);
+  const [displayCurrentLongitude, setDisplayCurrentLongitude] = useState(0);
 
   useEffect(() => {
     CheckIfLocationEnabled();
-    GetCurrentLocation();
-    props.passData(currentCords);
-  }, [displayCurrentAddress, currentCords]);
+    GetCurrentLocation(displayCurrentAddress);
+    props.passData(displayCurrentAddress, displayCurrentLongitude);
+  }, [displayCurrentAddress, displayCurrentLongitude]);
 
   const CheckIfLocationEnabled = async () => {
     let enabled = await Location.hasServicesEnabledAsync();
@@ -42,11 +40,17 @@ const GeolocationHandler = (props) => {
       );
     }
 
-    let { coords } = await Location.getCurrentPositionAsync();
+    let { coords } = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Highest,
+      maximumAge: 10000,
+    });
 
     if (coords) {
+      console.log("COORDS ", coords);
       const { latitude, longitude } = coords;
-      setCurrentCords(coords);
+      setDisplayCurrentAddress(latitude);
+      setDisplayCurrentLongitude(longitude);
+
       let response = await Location.reverseGeocodeAsync({
         latitude,
         longitude,
@@ -54,8 +58,6 @@ const GeolocationHandler = (props) => {
 
       for (let item of response) {
         let address = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}`;
-
-        setDisplayCurrentAddress(address);
       }
     }
   };

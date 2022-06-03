@@ -5,8 +5,9 @@ import { getDatabase, ref, onValue } from "firebase/database";
 import MapScreen from "./MapScreen";
 import { Ionicons } from "@expo/vector-icons";
 import GeolocationHandler from "../home/GeolocationHandler";
+import { doc, getFirestore, updateDoc } from "firebase/firestore";
 
-const MarkerMapScreen = () => {
+const MarkerMapScreen = ({ route }) => {
   const [mapRegion, setmapRegion] = useState({
     latitude: 41.0082,
     longitude: 28.9784,
@@ -17,18 +18,17 @@ const MarkerMapScreen = () => {
   const [dbState, setDbState] = useState([]);
   const [isMarkerOpen, setMarkerOpen] = useState(false);
   const db = getDatabase();
-  const [displayCurrentAddress, setDisplayCurrentAddress] = useState("");
+  const [loggedInUser, setLoggedInUser] = useState(route.params.user);
 
-  const passData = (data) => {
-    Alert.alert("Please Wait!", data, [
-      {
-        text: "Cancel",
-        style: "Cancel",
-      },
-      { text: "Okay" },
-    ]);
-
-    //setDisplayCurrentAddress(data);
+  const passData = (lat, long) => {
+    if (lat > 0 && long > 0) {
+      const firestore = getFirestore();
+      const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
+      updateDoc(surveyCollection, {
+        latitude: [lat],
+        longitude: [long],
+      });
+    }
   };
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const MarkerMapScreen = () => {
     <View style={styles.container}>
       <GeolocationHandler passData={passData} />
       {!isMarkerOpen ? (
-        <MapScreen />
+        <MapScreen loggedInUser={loggedInUser} />
       ) : (
         <MapView
           style={{ alignSelf: "stretch", height: "100%" }}
