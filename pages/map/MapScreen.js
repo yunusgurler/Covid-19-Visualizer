@@ -80,7 +80,9 @@ const MapScreen = ({ loggedInUser }) => {
         longitude: longitude,
         weight: 5,
       };
-      points.push(currentLocation);
+      points = [...points, currentLocation];
+      // points.push([{ currentLocation }]);
+      console.log("points ", points);
     }
   }, [latitude, longitude]);
 
