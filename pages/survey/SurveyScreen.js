@@ -24,6 +24,7 @@ const SurveyScreen = ({ route }) => {
   const [loggedInUser, setLoggedInUser] = useState(route.params.user);
   const [surveyCollection, setSurveyCollection] = useState();
   const [retakeSurvey, setRetakeSurvey] = useState(true);
+  const [dayLeft, setDayLeft] = useState(0);
 
   const answerString = "Answer" + [ques + 1];
   const scoreString = "Score";
@@ -124,7 +125,7 @@ const SurveyScreen = ({ route }) => {
         setRetakeSurvey(false);
         Alert.alert(
           "Please Wait!",
-          "Please wait 14 days to retake the survey",
+          `Please wait ${dayLeft} days to retake the survey`,
           [
             {
               text: "Cancel",
@@ -145,6 +146,7 @@ const SurveyScreen = ({ route }) => {
       diffTime = Math.abs(date2 - date1);
     }
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    setDayLeft(14 - diffDays);
     return diffDays - 1;
   };
 
