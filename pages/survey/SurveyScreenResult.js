@@ -58,11 +58,14 @@ const SurveyScreenResult = (props) => {
 
     setFinalScore(result);
 
+    //Score
     updateDoc(surveyCollection, {
       ResultScore: {
         [scoreString]: (result * 1.6).toFixed(2),
       },
     });
+
+    //Time
   };
 
   return (

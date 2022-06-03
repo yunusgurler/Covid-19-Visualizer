@@ -10,28 +10,55 @@ import {
   updateDoc,
   deleteDoc,
   setDoc,
+  getDoc,
 } from "firebase/firestore";
 import Checkbox from "expo-checkbox";
 import SurveyScreenResult from "./SurveyScreenResult";
 
 const SurveyScreen = ({ route }) => {
   const [questions, setQuestions] = useState(surveyQuestions);
-  const [ques, setQues] = useState(0);
+  let [ques, setQues] = useState(0);
   const [checkedLastQuestion, setCheckedLastQuestion] = useState([]);
   const [checkedFirstQuestion, setCheckedFirstQuestion] = useState([]);
   const [showSurveyResult, setShowSurveyResult] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(route.params.user);
   const [surveyCollection, setSurveyCollection] = useState();
+  const [retakeSurvey, setRetakeSurvey] = useState(true);
 
   const answerString = "Answer" + [ques + 1];
   const scoreString = "Score";
 
   useEffect(() => {
     const firestore = getFirestore();
-    setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
     const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
-    setSurveyCollection(surveyCollection);
-  }, [loggedInUser]);
+
+    getDoc(surveyCollection).then((snapshot) => {
+      if (snapshot?._document !== undefined && snapshot?._document !== null) {
+        let endSurveyDate = new Date(
+          snapshot?._document?.data?.value?.mapValue.fields?.retakeDate?.timestampValue
+        );
+        const loggedInDate = new Date(loggedInUser?.metadata.lastSignInTime);
+        if (dateDiff(endSurveyDate, loggedInDate) < 14) {
+          setRetakeSurvey(false);
+        }
+      } else {
+        setRetakeSurvey(true);
+        const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
+        setSurveyCollection(surveyCollection);
+        setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
+      }
+    });
+  }, [retakeSurvey, loggedInUser]);
+
+  useEffect(() => {
+    if (ques === 10) {
+      const retakeDate = new Date();
+
+      updateDoc(surveyCollection, {
+        retakeDate: retakeDate,
+      });
+    }
+  }, [ques]);
 
   const handleNextQuestion = () => {
     setQues(ques + 1);
@@ -72,29 +99,42 @@ const SurveyScreen = ({ route }) => {
   };
 
   const handleRetakeSurvey = () => {
-    const endSurveyDate = new Date();
-    const loggedInDate = new Date(loggedInUser?.metadata.lastSignInTime);
-    if (dateDiff(endSurveyDate, loggedInDate) > 14) {
-      setQues(0);
-      setCheckedLastQuestion([false, false, false, false, false]);
-      setCheckedFirstQuestion([false, false, false]);
-      setShowSurveyResult(false);
+    const firestore = getFirestore();
+    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
 
-      const firestore = getFirestore();
+    getDoc(surveyCollection).then((snapshot) => {
+      let endSurveyDate = new Date(
+        snapshot._document.data.value.mapValue.fields.retakeDate?.timestampValue
+      );
+      const loggedInDate = new Date(loggedInUser?.metadata.lastSignInTime);
 
-      deleteDoc(surveyCollection)
-        .then(() => console.log("Document deleted"))
-        .catch((error) => console.error("Error deleting document", error));
+      if (dateDiff(endSurveyDate, loggedInDate) > 14) {
+        setRetakeSurvey(true);
+        setQues(0);
+        setCheckedLastQuestion([false, false, false, false, false]);
+        setCheckedFirstQuestion([false, false, false]);
+        setShowSurveyResult(false);
 
-      setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
-    } else
-      Alert.alert("Please Wait!", "Please wait 14 days to retake the survey", [
-        {
-          text: "Cancel",
-          style: "Cancel",
-        },
-        { text: "Okay" },
-      ]);
+        deleteDoc(surveyCollection)
+          .then(() => console.log("Document deleted"))
+          .catch((error) => console.error("Error deleting document", error));
+
+        setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
+      } else {
+        setRetakeSurvey(false);
+        Alert.alert(
+          "Please Wait!",
+          "Please wait 14 days to retake the survey",
+          [
+            {
+              text: "Cancel",
+              style: "Cancel",
+            },
+            { text: "Okay" },
+          ]
+        );
+      }
+    });
   };
 
   const dateDiff = (date1, date2) => {
@@ -115,7 +155,7 @@ const SurveyScreen = ({ route }) => {
   return (
     <>
       <View style={styles.container}>
-        {questions.length !== ques ? (
+        {questions.length !== ques && retakeSurvey ? (
           <View style={styles.parent}>
             <View style={styles.top}>
               <Text style={styles.questionTitle}>Question {ques + 1}</Text>
