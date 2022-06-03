@@ -4,8 +4,8 @@ import MapView, { Marker, Heatmap, PROVIDER_GOOGLE } from "react-native-maps";
 
 const MapScreen = () => {
   const [mapRegion, setmapRegion] = useState({
-    latitude: 49.986111,
-    longitude: 20.061667,
+    latitude: 41.0082,
+    longitude: 28.9784,
     latitudeDelta: 1,
     longitudeDelta: 1,
   });

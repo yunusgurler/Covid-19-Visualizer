@@ -8,8 +8,8 @@ import GeolocationHandler from "../home/GeolocationHandler";
 
 const MarkerMapScreen = () => {
   const [mapRegion, setmapRegion] = useState({
-    latitude: 13.406,
-    longitude: 123.3753,
+    latitude: 41.0082,
+    longitude: 28.9784,
     latitudeDelta: 0.005,
     longitudeDelta: 0.005,
   });
@@ -27,7 +27,8 @@ const MarkerMapScreen = () => {
       },
       { text: "Okay" },
     ]);
-    setDisplayCurrentAddress(data);
+
+    //setDisplayCurrentAddress(data);
   };
 
   useEffect(() => {

@@ -7,12 +7,13 @@ const GeolocationHandler = (props) => {
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
     "Searching for your location..."
   );
+  const [currentCords, setCurrentCords] = useState();
 
   useEffect(() => {
     CheckIfLocationEnabled();
     GetCurrentLocation();
-    props.passData(displayCurrentAddress);
-  }, [displayCurrentAddress]);
+    props.passData(currentCords);
+  }, [displayCurrentAddress, currentCords]);
 
   const CheckIfLocationEnabled = async () => {
     let enabled = await Location.hasServicesEnabledAsync();
@@ -45,6 +46,7 @@ const GeolocationHandler = (props) => {
 
     if (coords) {
       const { latitude, longitude } = coords;
+      setCurrentCords(coords);
       let response = await Location.reverseGeocodeAsync({
         latitude,
         longitude,
