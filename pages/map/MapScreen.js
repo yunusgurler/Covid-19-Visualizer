@@ -76,7 +76,7 @@ const MapScreen = ({ loggedInUser }) => {
         }
       }
     });
-  }, [latitude, longitude]);
+  }, [latitude, longitude, loggedInUser]);
 
   useEffect(() => {
     if (latitude > 0 && longitude > 0) {
