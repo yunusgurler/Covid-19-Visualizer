@@ -55,9 +55,18 @@ const MapScreen = ({ loggedInUser }) => {
     if (lat > 0 && long > 0) {
       const firestore = getFirestore();
       const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
-      updateDoc(surveyCollection, {
-        latitude: [lat],
-        longitude: [long],
+
+      getDoc(surveyCollection).then((snapshot) => {
+        if (snapshot?._document !== undefined && snapshot?._document !== null) {
+          let resultScore =
+            snapshot._document.data.value.mapValue.fields?.ResultScore?.mapValue
+              ?.fields.Score?.stringValue;
+
+          if (parseInt(resultScore) > 60) {
+            setLatitude(lat);
+            setLongitude(long);
+          }
+        }
       });
     }
   };
