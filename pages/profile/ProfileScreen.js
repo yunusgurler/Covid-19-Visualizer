@@ -36,7 +36,6 @@ export default function ProfileScreen() {
   });
 
   const passData = (lat, long, address) => {
-    console.log("address ", address);
     if (address != "" && address != null) {
       setDisplayCurrentAddress(address);
     }
