@@ -1,55 +1,86 @@
 import { Platform, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MapView, { Marker, Heatmap, PROVIDER_GOOGLE } from "react-native-maps";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
-const MapScreen = () => {
-  const [mapRegion, setmapRegion] = useState({
-    latitude: 49.986111,
-    longitude: 20.061667,
+const MapScreen = ({ loggedInUser }) => {
+  const [mapRegion, setMapRegion] = useState({
+    latitude: 41.0082,
+    longitude: 28.9784,
     latitudeDelta: 1,
     longitudeDelta: 1,
   });
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  let [points, setPoints] = useState([
+    { latitude: 41.0456, longitude: 28.8247, weight: 1 },
+    { latitude: 41.0956, longitude: 28.9247, weight: 2 },
+    { latitude: 41.1156, longitude: 28.8247, weight: 5 },
+    { latitude: 41.1256, longitude: 28.9247, weight: 1 },
+    { latitude: 41.1356, longitude: 28.9547, weight: 2 },
+    { latitude: 41.1556, longitude: 29.247, weight: 3 },
+    { latitude: 40.9994, longitude: 29.093, weight: 4 },
+    { latitude: 41.028, longitude: 28.8247, weight: 2 },
+    { latitude: 41.0956, longitude: 28.6818, weight: 1 },
+    { latitude: 41.0206, longitude: 28.6025, weight: 1 },
+    { latitude: 41.006, longitude: 28.546, weight: 1 },
+    { latitude: 40.9905, longitude: 28.7876, weight: 2 },
+    { latitude: 41.0571, longitude: 28.756, weight: 6 },
+    { latitude: 40.98433, longitude: 28.8731, weight: 4 },
+    { latitude: 41.002, longitude: 28.846, weight: 3 },
+    { latitude: 41.0056, longitude: 28.8736, weight: 2 },
+    { latitude: 41.041, longitude: 28.839, weight: 2 },
+    { latitude: 41.06533, longitude: 28.908, weight: 6 },
+    { latitude: 41.014, longitude: 28.9462, weight: 4 },
+    { latitude: 41.0174, longitude: 28.9616, weight: 3 },
+    { latitude: 41.0067, longitude: 28.9715, weight: 2 },
+    { latitude: 41.0275, longitude: 28.9496, weight: 3 },
+    { latitude: 41.025, longitude: 28.973, weight: 2 },
+    { latitude: 41.041, longitude: 28.639, weight: 2 },
+    { latitude: 41.06533, longitude: 28.308, weight: 6 },
+    { latitude: 41.014, longitude: 28.4462, weight: 4 },
+    { latitude: 41.0174, longitude: 28.4616, weight: 3 },
+    { latitude: 41.0067, longitude: 28.5715, weight: 2 },
+    { latitude: 41.058, longitude: 29.006, weight: 3 },
+    { latitude: 41.0206, longitude: 29.029, weight: 2 },
+    { latitude: 41.141, longitude: 28.839, weight: 2 },
+    { latitude: 41.16533, longitude: 28.408, weight: 6 },
+    { latitude: 41.214, longitude: 28.4762, weight: 4 },
+    { latitude: 41.1174, longitude: 28.4116, weight: 3 },
+    { latitude: 41.1067, longitude: 28.5315, weight: 2 },
+  ]);
 
-  const points = [
-    { latitude: 49.986111, longitude: 20.061667, weight: 1 },
-    { latitude: 50.193139, longitude: 20.288717, weight: 2 },
-    { latitude: 49.740278, longitude: 19.588611, weight: 1 },
-    { latitude: 50.061389, longitude: 19.938333, weight: 8 },
-    { latitude: 50.174722, longitude: 20.986389, weight: 11 },
-    { latitude: 50.064507, longitude: 19.920777, weight: 98 },
-    { latitude: 49.3, longitude: 19.95, weight: 41 },
-    { latitude: 49.833333, longitude: 19.940556, weight: 66 },
-    { latitude: 49.477778, longitude: 20.03, weight: 9 },
-    { latitude: 49.975, longitude: 19.828333, weight: 11 },
-    { latitude: 50.357778, longitude: 20.0325, weight: 33 },
-    { latitude: 50.0125, longitude: 20.988333, weight: 76 },
-    { latitude: 50.067959, longitude: 19.91266, weight: 63 },
-    { latitude: 49.418588, longitude: 20.323788, weight: 52 },
-    { latitude: 49.62113, longitude: 20.710777, weight: 88 },
-    { latitude: 50.039167, longitude: 19.220833, weight: 1 },
-    { latitude: 49.970495, longitude: 19.837214, weight: 78 },
-    { latitude: 49.701667, longitude: 20.425556, weight: 1 },
-    { latitude: 50.078429, longitude: 20.050861, weight: 1 },
-    { latitude: 49.895, longitude: 21.054167, weight: 1 },
-    { latitude: 50.27722, longitude: 19.569658, weight: 65 },
-    { latitude: 49.968889, longitude: 20.606389, weight: 1 },
-    { latitude: 49.51232, longitude: 19.63755, weight: 1 },
-    { latitude: 50.018077, longitude: 20.989849, weight: 35 },
-    { latitude: 50.081698, longitude: 19.895629, weight: 22 },
-    { latitude: 49.968889, longitude: 20.43, weight: 54 },
-    { latitude: 50.279167, longitude: 19.559722, weight: 1 },
-    { latitude: 50.067947, longitude: 19.912865, weight: 69 },
-    { latitude: 49.654444, longitude: 21.159167, weight: 1 },
-    { latitude: 50.099606, longitude: 20.016707, weight: 80 },
-    { latitude: 50.357778, longitude: 20.0325, weight: 99 },
-    { latitude: 49.296628, longitude: 19.959694, weight: 1 },
-    { latitude: 50.019014, longitude: 21.002474, weight: 46 },
-    { latitude: 50.056829, longitude: 19.926414, weight: 22 },
-    { latitude: 49.616667, longitude: 20.7, weight: 1 },
-    { latitude: 49.883333, longitude: 19.5, weight: 33 },
-    { latitude: 50.054217, longitude: 19.943289, weight: 1 },
-    { latitude: 50.133333, longitude: 19.4, weight: 100 },
-  ];
+  useEffect(() => {
+    const firestore = getFirestore();
+    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
+
+    getDoc(surveyCollection).then((snapshot) => {
+      if (snapshot?._document !== undefined && snapshot?._document !== null) {
+        let data = snapshot?._document?.data?.value?.mapValue.fields;
+        let latitudeArray = Object.values(data.latitude)[0]?.values;
+        let longitudeArray = Object.values(data.longitude)[0]?.values;
+
+        if (latitudeArray) {
+          latitudeArray && latitudeArray.map((a) => setLatitude(a.doubleValue));
+        }
+        if (longitudeArray) {
+          longitudeArray &&
+            longitudeArray.map((a) => setLongitude(a.doubleValue));
+        }
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (latitude > 0 && longitude > 0) {
+      let currentLocation = {
+        latitude: latitude,
+        longitude: longitude,
+        weight: 3,
+      };
+      setPoints([...points, currentLocation]);
+    }
+  }, [latitude, longitude]);
 
   return (
     <View style={styles.container}>
@@ -61,7 +92,7 @@ const MapScreen = () => {
       >
         <Heatmap
           points={points}
-          radius={80}
+          radius={40}
           opacity={1}
           gradient={{
             colors: ["#79BC6A", "#BBCF4C", "#EEC20B", "#F29305", "#E50000"],

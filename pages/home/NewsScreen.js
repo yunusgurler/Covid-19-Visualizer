@@ -7,11 +7,8 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import {
-  LineChart,
-  BarChart,
+import { 
   PieChart,
-  StackedBarChart,
 } from "react-native-chart-kit";
 import {
   getFirestore,
@@ -20,154 +17,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-
-const MyBezierLineChart = () => {
-  return (
-    <>
-      <Text style={styles.header}>Bezier Line Chart</Text>
-      <LineChart
-        data={{
-          labels: ["January", "February", "March", "April"],
-          datasets: [
-            {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
-            },
-          ],
-        }}
-        width={Dimensions.get("window").width - 16} // from react-native
-        height={220}
-        yAxisLabel={"Rs"}
-        chartConfig={{
-          backgroundColor: "#1cc910",
-          backgroundGradientFrom: "#eff3ff",
-          backgroundGradientTo: "#efefef",
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        bezier
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
-    </>
-  );
-};
-
-const MyLineChart = () => {
-  return (
-    <>
-      <Text style={styles.header}>Line Chart</Text>
-      <LineChart
-        data={{
-          labels: ["January", "February", "March", "April", "May", "June"],
-          datasets: [
-            {
-              data: [20, 45, 28, 80, 99, 43],
-              strokeWidth: 2,
-            },
-          ],
-        }}
-        width={Dimensions.get("window").width - 16}
-        height={220}
-        chartConfig={{
-          backgroundColor: "#1cc910",
-          backgroundGradientFrom: "#eff3ff",
-          backgroundGradientTo: "#efefef",
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
-    </>
-  );
-};
-
-const MyBarChart = () => {
-  return (
-    <>
-      <Text style={styles.header}>Bar Chart</Text>
-      <BarChart
-        data={{
-          labels: ["January", "February", "March", "April", "May", "June"],
-          datasets: [
-            {
-              data: [20, 45, 28, 80, 99, 43],
-            },
-          ],
-        }}
-        width={Dimensions.get("window").width - 16}
-        height={220}
-        yAxisLabel={"Rs"}
-        chartConfig={{
-          backgroundColor: "#1cc910",
-          backgroundGradientFrom: "#eff3ff",
-          backgroundGradientTo: "#efefef",
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
-    </>
-  );
-};
-const MyStackedBarChart = () => {
-  return (
-    <>
-      <Text style={styles.header}>Stacked Bar Chart</Text>
-      <StackedBarChart
-        data={{
-          labels: ["Test1", "Test2"],
-          legend: ["L1", "L2", "L3"],
-          data: [
-            [60, 60, 60],
-            [30, 30, 60],
-          ],
-          barColors: ["#dfe4ea", "#ced6e0", "#a4b0be"],
-        }}
-        width={Dimensions.get("window").width - 16}
-        height={220}
-        chartConfig={{
-          backgroundColor: "#1cc910",
-          backgroundGradientFrom: "#eff3ff",
-          backgroundGradientTo: "#efefef",
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
-    </>
-  );
-};
+import GeolocationHandler from "./GeolocationHandler";
 
 const MyPieChart1 = () => {
   return (
@@ -595,21 +445,12 @@ const NewsScreen = ({ route }) => {
           <Text style={styles.textstyle}>
             Hello {username.charAt(0).toUpperCase() + username.slice(1)}
           </Text>
-          <Text style={styles.textstyle}>Score {score}</Text>
+          <Text style={styles.textstyle}>Your Covid-19 risk is {score}%</Text>
         </View>
       </View>
       <ScrollView>
         <View style={styles.container}>
           <View>
-            {/*Example of Bezier LineChart*/}
-            <MyBezierLineChart />
-            {/*Example of LineChart*/}
-            <MyLineChart />
-            {/*Example of Bar Chart*/}
-            <MyBarChart />
-            {/*Example of StackedBar Chart*/}
-            <MyStackedBarChart />
-            {/*Example of Pie Chart*/}
             <MyPieChart />
             {/*Example of Pie Chart1*/}
             {/*Example of Pie Chart7*/}
@@ -669,7 +510,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   textstyle: {
-    fontSize: 24,
+    fontSize: 20,
     marginRight: 10,
     color: "gray",
   },

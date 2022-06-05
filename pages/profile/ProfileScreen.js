@@ -1,5 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, View, Image, TextInput } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  View,
+  Image,
+  TextInput,
+  Alert,
+} from "react-native";
 import { styles } from "./ProfileScreenStyle";
 import {
   Avatar,
@@ -10,10 +17,10 @@ import {
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
-import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import GeolocationHandler from "../home/GeolocationHandler";
 
 export default function ProfileScreen() {
   const [loggedInUser, setLoggedInUser] = useState("");
@@ -21,6 +28,7 @@ export default function ProfileScreen() {
 
   const auth = getAuth();
   const navigation = useNavigation();
+  const [displayCurrentAddress, setDisplayCurrentAddress] = useState("");
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -33,24 +41,47 @@ export default function ProfileScreen() {
     }
   });
 
+  const passData = (data) => {
+    setDisplayCurrentAddress(data);
+  };
+
   const handleLogout = () => {
-    navigation.replace("Login");
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        navigation.replace("Login");
+      })
+      .catch((error) => {
+        console.log("Sign out unsuccessful");
+      });
   };
 
   return (
     <View style={styles.container}>
+      <GeolocationHandler passData={passData} />
       <View
         style={{
-          backgroundColor: "#EEDFDE",
+          backgroundColor: "#c6f0fe",
           width: "100%",
           height: 200,
           alignItems: "center",
         }}
       >
-        <Image
-          source={{ uri: "" }}
-          style={{ width: 100, height: 100, marginTop: 120, borderRadius: 50 }}
-        />
+        <View>
+          <AwesomeIcon
+            name="user-circle"
+            color="#191919"
+            size={100}
+            style={{
+              width: 100,
+              height: 100,
+              marginTop: 85,
+              marginLeft: 20,
+              alignItems: "center",
+              borderRadius: 50,
+            }}
+          />
+        </View>
       </View>
 
       <View>
@@ -66,7 +97,7 @@ export default function ProfileScreen() {
                   },
                 ]}
               >
-                {loggedInUser}
+                {loggedInUser.charAt(0).toUpperCase() + loggedInUser.slice(1)}
               </Title>
               <Caption style={styles.usernameCaption}>@{loggedInUser}</Caption>
             </View>
@@ -76,26 +107,14 @@ export default function ProfileScreen() {
         <View style={styles.userInfo}>
           <View style={styles.row}>
             <Icon name="map-marker-radius" color="black" size={20} />
-            <TextInput
-              style={{ color: "#777777", padding: 10 }}
-              placeholder="Istanbul/Turkey"
-            />
-          </View>
-
-          <View style={styles.row}>
-            <Icon name="phone" color="black" size={20} />
-            <TextInput
-              style={{ color: "#777777", padding: 10 }}
-              placeholder="+90 xxxxxx"
-            />
+            <Text style={styles.emailPadding}>
+              {displayCurrentAddress != undefined && displayCurrentAddress}
+            </Text>
           </View>
 
           <View style={styles.row}>
             <Icon name="email" color="black" size={20} />
-            <TextInput
-              style={{ color: "#777777", padding: 10 }}
-              placeholder={loggedInUserEmail}
-            />
+            <Text style={styles.emailPadding}>{loggedInUserEmail}</Text>
           </View>
         </View>
 
@@ -108,25 +127,6 @@ export default function ProfileScreen() {
               </View>
             </TouchableRipple>
           </View>
-
-          <View style={styles.menuWrapper}>
-            <TouchableRipple onPress={() => {}}>
-              <View style={styles.menuItem}>
-                <Icon name="help-circle-outline" color="black" size={20} />
-                <Text style={styles.menuItemText}>Help</Text>
-              </View>
-            </TouchableRipple>
-          </View>
-
-          <View style={styles.menuWrapper}>
-            <TouchableRipple onPress={() => {}}>
-              <View style={styles.menuItem}>
-                <MaterialIcon name="notifications" color="black" size={20} />
-                <Text style={styles.menuItemText}>Notifications</Text>
-              </View>
-            </TouchableRipple>
-          </View>
-
           <View style={styles.menuWrapper}>
             <TouchableRipple onPress={handleLogout}>
               <View style={styles.menuItem}>

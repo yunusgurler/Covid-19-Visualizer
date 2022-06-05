@@ -45,16 +45,19 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container} behavior="padding">
+      <Image style={styles.logo} source={require("../../assets/logo.png")} />
+
       <View style={styles.inputContainer}>
-        <Image style={styles.logo} source={require("../../assets/logo.png")} />
         <TextInput
           placeholder="Email"
+          placeholderTextColor={'gray'}
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
         <TextInput
           placeholder="Password"
+          placeholderTextColor={'gray'}
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
