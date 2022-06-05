@@ -55,6 +55,7 @@ const MarkerMapScreen = ({ route }) => {
                 key={i}
                 title={"Death: " + place.Confirmed}
                 coordinate={place.Coordinate}
+                pinColor={"#56D6FF"}
               />
             ))}
           <TouchableOpacity
