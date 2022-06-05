@@ -39,18 +39,22 @@ const SurveyScreenResult = (props) => {
       let valuesArray = Object.values(item)[0]?.values;
 
       if (valuesArray) {
-        if (valuesArray.mapValue) {
-          valuesArray &&
-            valuesArray.map(
-              (a) =>
-                (arrayValueScore += parseInt(
-                  a.mapValue?.fields?.score?.integerValue
-                ))
-            );
-        }
+        valuesArray &&
+          valuesArray.map(
+            (a) =>
+              (arrayValueScore += parseInt(
+                a.mapValue?.fields?.score?.integerValue
+              ))
+          );
       }
     });
 
+    console.log(
+      "array value score ",
+      arrayValueScore,
+      " mapValueScore ",
+      mapValueScore
+    );
     let result = arrayValueScore + mapValueScore;
 
     const firestore = getFirestore();
