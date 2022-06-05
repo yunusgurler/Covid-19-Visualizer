@@ -21,6 +21,7 @@ const MyPieChart1 = () => {
   return (
     <>
       <Text style={styles.header}>Diet Pie Chart</Text>
+      <Text>This chart gives information about the diet of the respondents.</Text>
       <PieChart
         data={[
           {
@@ -74,6 +75,7 @@ const MyPieChart7 = () => {
   return (
     <>
       <Text style={styles.header}>Vaccine Pie Chart</Text>
+      <Text>This chart gives information about how many vaccines do respondents had.</Text>
       <PieChart
         data={[
           {
@@ -141,6 +143,8 @@ const MyPieChart = () => {
   return (
     <>
       <Text style={styles.header}>Social Rate Pie Chart</Text>
+      <Text>This chart gives information about whether the respondents go outside more than three days.</Text>
+
       <PieChart
         data={[
           {
@@ -187,6 +191,8 @@ const MyPieChart2 = () => {
   return (
     <>
       <Text style={styles.header}>Smoker Pie Chart</Text>
+      <Text>This chart gives information whether the respondents smokes or not.</Text>
+
       <PieChart
         data={[
           {
@@ -233,6 +239,7 @@ const MyPieChart3 = () => {
   return (
     <>
       <Text style={styles.header}>Cough Breath Pie Chart</Text>
+      <Text>This chart gives information about the respondents having trouble of breathing.</Text>
       <PieChart
         data={[
           {
@@ -279,6 +286,8 @@ const MyPieChart4 = () => {
   return (
     <>
       <Text style={styles.header}>Public Transportation Pie Chart</Text>
+      <Text>This chart gives information about the respondents using public transportation or not.</Text>
+
       <PieChart
         data={[
           {
@@ -325,6 +334,8 @@ const MyPieChart5 = () => {
   return (
     <>
       <Text style={styles.header}>Chronological illness Pie Chart</Text>
+      <Text>This chart gives information about the respondents has a chronological illnes or not.</Text>
+
       <PieChart
         data={[
           {
@@ -371,6 +382,8 @@ const MyPieChart6 = () => {
   return (
     <>
       <Text style={styles.header}>Loss of taste or smell Pie Chart</Text>
+      <Text>This chart gives information about the respondents has loss of taste or smell or not.</Text>
+
       <PieChart
         data={[
           {

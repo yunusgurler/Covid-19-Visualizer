@@ -73,13 +73,10 @@ const MapScreen = ({ loggedInUser }) => {
             longitudeArray &&
               longitudeArray.map((a) => setLongitude(a.doubleValue));
           }
-        } else {
-          setLatitude(0);
-          setLatitude(0);
         }
       }
     });
-  }, []);
+  }, [latitude, longitude]);
 
   useEffect(() => {
     if (latitude > 0 && longitude > 0) {

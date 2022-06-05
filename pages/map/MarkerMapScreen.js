@@ -11,8 +11,8 @@ const MarkerMapScreen = ({ route }) => {
   const [mapRegion, setmapRegion] = useState({
     latitude: 41.0082,
     longitude: 28.9784,
-    latitudeDelta: 0.005,
-    longitudeDelta: 0.005,
+    latitudeDelta: 0.5,
+    longitudeDelta: 0.5,
   });
 
   const [dbState, setDbState] = useState([]);

@@ -69,7 +69,7 @@ const SurveyScreenResult = (props) => {
 
   return (
     <View style={styles.container}>
-      {(finalScore * 1.6).toFixed(2) > 50 ? (
+      {(finalScore * 1.6).toFixed(2) > 60 ? (
         <Ionicons name="sad-outline" size={80} color="black" />
       ) : (
         <Ionicons name="happy-outline" size={80} color="black" />
