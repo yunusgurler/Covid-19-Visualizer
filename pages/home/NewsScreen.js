@@ -24,21 +24,21 @@ const MyPieChart1 = () => {
       <PieChart
         data={[
           {
-            name: "good and balanced diet.",
+            name: "Good",
             population: 192,
             color: "red",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "Neither good nor bad.",
+            name: "Medium",
             population: 46,
             color: "orange",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "unbalanced and malnourished",
+            name: "Bad",
             population: 80,
             color: "blue",
             legendFontColor: "#7F7F7F",
@@ -77,28 +77,28 @@ const MyPieChart7 = () => {
       <PieChart
         data={[
           {
-            name: "1 dose of vaccine",
+            name: "One doses",
             population: 10,
             color: "red",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "2 doses of vaccine",
+            name: "Two doses",
             population: 297,
             color: "orange",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "3 doses of vaccine",
+            name: "Three doses",
             population: 80,
             color: "yellow",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "3+ doses of vaccine",
+            name: "Three+ doses",
             population: 2,
             color: "green",
             legendFontColor: "#7F7F7F",
@@ -144,14 +144,14 @@ const MyPieChart = () => {
       <PieChart
         data={[
           {
-            name: "NO",
+            name: "No",
             population: 177,
             color: "red",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "YES",
+            name: "Yes",
             population: 141,
             color: "blue",
             legendFontColor: "#7F7F7F",
@@ -190,14 +190,14 @@ const MyPieChart2 = () => {
       <PieChart
         data={[
           {
-            name: "NO",
+            name: "No",
             population: 182,
             color: "red",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "YES",
+            name: "Yes",
             population: 136,
             color: "blue",
             legendFontColor: "#7F7F7F",
@@ -236,14 +236,14 @@ const MyPieChart3 = () => {
       <PieChart
         data={[
           {
-            name: "NO",
+            name: "No",
             population: 291,
             color: "red",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "YES",
+            name: "Yes",
             population: 27,
             color: "blue",
             legendFontColor: "#7F7F7F",
@@ -282,14 +282,14 @@ const MyPieChart4 = () => {
       <PieChart
         data={[
           {
-            name: "NO",
+            name: "No",
             population: 116,
             color: "red",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "YES",
+            name: "Yes",
             population: 202,
             color: "blue",
             legendFontColor: "#7F7F7F",
@@ -328,14 +328,14 @@ const MyPieChart5 = () => {
       <PieChart
         data={[
           {
-            name: "NO",
+            name: "No",
             population: 304,
             color: "red",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "YES",
+            name: "Yes",
             population: 14,
             color: "blue",
             legendFontColor: "#7F7F7F",
@@ -374,14 +374,14 @@ const MyPieChart6 = () => {
       <PieChart
         data={[
           {
-            name: "NO",
+            name: "No",
             population: 307,
             color: "red",
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           },
           {
-            name: "YES",
+            name: "Yes",
             population: 11,
             color: "blue",
             legendFontColor: "#7F7F7F",
