@@ -57,15 +57,25 @@ const MapScreen = ({ loggedInUser }) => {
     getDoc(surveyCollection).then((snapshot) => {
       if (snapshot?._document !== undefined && snapshot?._document !== null) {
         let data = snapshot?._document?.data?.value?.mapValue.fields;
-        let latitudeArray = Object.values(data.latitude)[0]?.values;
-        let longitudeArray = Object.values(data.longitude)[0]?.values;
 
-        if (latitudeArray) {
-          latitudeArray && latitudeArray.map((a) => setLatitude(a.doubleValue));
-        }
-        if (longitudeArray) {
-          longitudeArray &&
-            longitudeArray.map((a) => setLongitude(a.doubleValue));
+        let resultScore =
+          data?.ResultScore?.mapValue?.fields?.Score?.stringValue;
+
+        if (resultScore > 60) {
+          let latitudeArray = Object.values(data.latitude)[0]?.values;
+          let longitudeArray = Object.values(data.longitude)[0]?.values;
+
+          if (latitudeArray) {
+            latitudeArray &&
+              latitudeArray.map((a) => setLatitude(a.doubleValue));
+          }
+          if (longitudeArray) {
+            longitudeArray &&
+              longitudeArray.map((a) => setLongitude(a.doubleValue));
+          }
+        } else {
+          setLatitude(0);
+          setLatitude(0);
         }
       }
     });
