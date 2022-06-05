@@ -49,12 +49,6 @@ const SurveyScreenResult = (props) => {
       }
     });
 
-    console.log(
-      "array value score ",
-      arrayValueScore,
-      " mapValueScore ",
-      mapValueScore
-    );
     let result = arrayValueScore + mapValueScore;
 
     const firestore = getFirestore();
@@ -66,7 +60,7 @@ const SurveyScreenResult = (props) => {
 
     updateDoc(surveyCollection, {
       ResultScore: {
-        [scoreString]: (result * 1.6).toFixed(2),
+        [scoreString]: (result * 1.588).toFixed(1),
       },
     });
   };
