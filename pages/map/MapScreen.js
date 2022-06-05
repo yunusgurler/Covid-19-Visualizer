@@ -4,7 +4,7 @@ import MapView, { Marker, Heatmap, PROVIDER_GOOGLE } from "react-native-maps";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 const MapScreen = ({ loggedInUser }) => {
-  const [mapRegion, setmapRegion] = useState({
+  const [mapRegion, setMapRegion] = useState({
     latitude: 41.0082,
     longitude: 28.9784,
     latitudeDelta: 1,

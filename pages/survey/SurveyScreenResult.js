@@ -39,13 +39,15 @@ const SurveyScreenResult = (props) => {
       let valuesArray = Object.values(item)[0]?.values;
 
       if (valuesArray) {
-        valuesArray &&
-          valuesArray.map(
-            (a) =>
-              (arrayValueScore += parseInt(
-                a.mapValue?.fields?.score?.integerValue
-              ))
-          );
+        if (valuesArray.mapValue) {
+          valuesArray &&
+            valuesArray.map(
+              (a) =>
+                (arrayValueScore += parseInt(
+                  a.mapValue?.fields?.score?.integerValue
+                ))
+            );
+        }
       }
     });
 
@@ -58,42 +60,27 @@ const SurveyScreenResult = (props) => {
 
     setFinalScore(result);
 
-    //Score
     updateDoc(surveyCollection, {
       ResultScore: {
         [scoreString]: (result * 1.6).toFixed(2),
       },
     });
-
-    //Time
   };
 
   return (
     <View style={styles.container}>
-      <View>
-        {(finalScore * 1.6).toFixed(2) > 50 ? (
-          <Ionicons
-            style={{ display: "flex", justifyContent: "center" }}
-            name="sad-outline"
-            size={80}
-            color="black"
-          />
-        ) : (
-          <Ionicons
-            style={{ display: "flex", justifyContent: "center" }}
-            name="happy-outline"
-            size={80}
-            color="black"
-          />
-        )}
+      {(finalScore * 1.6).toFixed(2) > 50 ? (
+        <Ionicons name="sad-outline" size={80} color="black" />
+      ) : (
+        <Ionicons name="happy-outline" size={80} color="black" />
+      )}
 
-        <Text style={styles.paragraph}>
-          Hello {username.charAt(0).toUpperCase() + username.slice(1)}
-        </Text>
-        <Text style={styles.covid}>
-          Your Covid-19 risk is % {(finalScore * 1.6).toFixed(2)}
-        </Text>
-      </View>
+      <Text style={styles.paragraph}>
+        Hello {username.charAt(0).toUpperCase() + username.slice(1)}
+      </Text>
+      <Text style={styles.covid}>
+        Your Covid-19 risk is % {(finalScore * 1.6).toFixed(2)}
+      </Text>
     </View>
   );
 };
