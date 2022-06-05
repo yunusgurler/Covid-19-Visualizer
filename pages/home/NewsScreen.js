@@ -7,9 +7,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import { 
-  PieChart,
-} from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 import {
   getFirestore,
   doc,
@@ -143,7 +141,6 @@ const MyPieChart = () => {
   return (
     <>
       <Text style={styles.header}>Social Rate Pie Chart</Text>
-      <Text>Social events more than 3 days</Text>
       <PieChart
         data={[
           {
@@ -431,7 +428,7 @@ const NewsScreen = ({ route }) => {
 
       getDoc(surveyCollection).then((snapshot) =>
         setScore(
-          snapshot._document.data.value.mapValue.fields?.ResultScore.mapValue
+          snapshot._document.data.value.mapValue.fields?.ResultScore?.mapValue
             ?.fields.Score?.stringValue
         )
       );

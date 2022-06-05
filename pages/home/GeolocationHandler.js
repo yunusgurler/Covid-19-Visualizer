@@ -4,14 +4,11 @@ import * as Location from "expo-location";
 
 const GeolocationHandler = (props) => {
   const [locationServiceEnabled, setLocationServiceEnabled] = useState(false);
-  const [displayCurrentAddress, setDisplayCurrentAddress] = useState(0);
-  const [displayCurrentLongitude, setDisplayCurrentLongitude] = useState(0);
 
   useEffect(() => {
     CheckIfLocationEnabled();
-    GetCurrentLocation(displayCurrentAddress);
-    props.passData(displayCurrentAddress, displayCurrentLongitude);
-  }, [displayCurrentAddress, displayCurrentLongitude]);
+    GetCurrentLocation();
+  }, []);
 
   const CheckIfLocationEnabled = async () => {
     let enabled = await Location.hasServicesEnabledAsync();
@@ -46,10 +43,7 @@ const GeolocationHandler = (props) => {
     });
 
     if (coords) {
-      console.log("COORDS ", coords);
       const { latitude, longitude } = coords;
-      setDisplayCurrentAddress(latitude);
-      setDisplayCurrentLongitude(longitude);
 
       let response = await Location.reverseGeocodeAsync({
         latitude,
@@ -58,6 +52,8 @@ const GeolocationHandler = (props) => {
 
       for (let item of response) {
         let address = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}`;
+
+        props.passData(latitude, longitude, address);
       }
     }
   };

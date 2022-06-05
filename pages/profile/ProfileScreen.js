@@ -1,12 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  Button,
-  StyleSheet,
-  View,
-  Image,
-  TextInput,
-  Alert,
-} from "react-native";
+import { View, Image } from "react-native";
 import { styles } from "./ProfileScreenStyle";
 import {
   Avatar,
@@ -25,6 +18,7 @@ import GeolocationHandler from "../home/GeolocationHandler";
 export default function ProfileScreen() {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const auth = getAuth();
   const navigation = useNavigation();
@@ -41,8 +35,11 @@ export default function ProfileScreen() {
     }
   });
 
-  const passData = (data) => {
-    setDisplayCurrentAddress(data);
+  const passData = (lat, long, address) => {
+    console.log("address ", address);
+    if (address != "" && address != null) {
+      setDisplayCurrentAddress(address);
+    }
   };
 
   const handleLogout = () => {
@@ -107,6 +104,7 @@ export default function ProfileScreen() {
         <View style={styles.userInfo}>
           <View style={styles.row}>
             <Icon name="map-marker-radius" color="black" size={20} />
+
             <Text style={styles.emailPadding}>
               {displayCurrentAddress != undefined && displayCurrentAddress}
             </Text>
