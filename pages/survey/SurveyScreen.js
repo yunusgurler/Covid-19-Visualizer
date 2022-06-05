@@ -115,13 +115,14 @@ const SurveyScreen = ({ route }) => {
       let endSurveyDate = new Date(
         snapshot._document.data.value.mapValue.fields.retakeDate?.timestampValue
       );
+
       let score =
         snapshot._document.data.value.mapValue.fields?.ResultScore?.mapValue
           ?.fields.Score?.stringValue;
 
       const loggedInDate = new Date(loggedInUser?.metadata.lastSignInTime);
 
-      if (dateDiff(endSurveyDate, loggedInDate) > 14 || score < 60) {
+      if (dateDiff(endSurveyDate, loggedInDate) > 14 || parseInt(score) < 60) {
         setRetakeSurvey(true);
         setQues(0);
         setCheckedLastQuestion([false, false, false, false, false]);
@@ -138,13 +139,7 @@ const SurveyScreen = ({ route }) => {
         Alert.alert(
           "Please Wait!",
           `Please wait ${dayLeft} days to retake the survey`,
-          [
-            {
-              text: "Cancel",
-              style: "Cancel",
-            },
-            { text: "Okay" },
-          ]
+          [{ text: "Okay" }]
         );
       }
     });
