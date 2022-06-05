@@ -2,6 +2,7 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import MapView, { Marker, Heatmap, PROVIDER_GOOGLE } from "react-native-maps";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
+import GeolocationHandler from "../home/GeolocationHandler";
 
 const MapScreen = ({ loggedInUser }) => {
   const [mapRegion, setMapRegion] = useState({
@@ -50,6 +51,17 @@ const MapScreen = ({ loggedInUser }) => {
     { latitude: 41.1067, longitude: 28.5315, weight: 2 },
   ]);
 
+  const passData = (lat, long, address) => {
+    if (lat > 0 && long > 0) {
+      const firestore = getFirestore();
+      const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
+      updateDoc(surveyCollection, {
+        latitude: [lat],
+        longitude: [long],
+      });
+    }
+  };
+
   useEffect(() => {
     const firestore = getFirestore();
     const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
@@ -91,6 +103,7 @@ const MapScreen = ({ loggedInUser }) => {
 
   return (
     <View style={styles.container}>
+      <GeolocationHandler passData={passData} />
       <MapView
         provider={PROVIDER_GOOGLE}
         ref={(map) => (map = map)}
