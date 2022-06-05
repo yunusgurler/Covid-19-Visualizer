@@ -22,7 +22,7 @@ const SurveyScreen = ({ route }) => {
   const [checkedFirstQuestion, setCheckedFirstQuestion] = useState([]);
   const [showSurveyResult, setShowSurveyResult] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(route.params.user);
-  const [surveyCollection, setSurveyCollection] = useState();
+
   const [retakeSurvey, setRetakeSurvey] = useState(true);
   const [dayLeft, setDayLeft] = useState(0);
 
@@ -44,8 +44,7 @@ const SurveyScreen = ({ route }) => {
         }
       } else {
         setRetakeSurvey(true);
-        const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
-        setSurveyCollection(surveyCollection);
+
         setDoc(doc(firestore, "Survey DB", loggedInUser?.uid), {});
       }
     });
@@ -54,7 +53,8 @@ const SurveyScreen = ({ route }) => {
   useEffect(() => {
     if (ques === 10) {
       const retakeDate = new Date();
-
+      const firestore = getFirestore();
+      const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
       updateDoc(surveyCollection, {
         retakeDate: retakeDate,
       });
@@ -66,6 +66,8 @@ const SurveyScreen = ({ route }) => {
   };
 
   const handleFirestoreAnswerYes = () => {
+    const firestore = getFirestore();
+    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
     updateDoc(surveyCollection, {
       [answerString]: {
         [answerString]: true,
@@ -76,6 +78,8 @@ const SurveyScreen = ({ route }) => {
   };
 
   const handleFirestoreAnswerNo = () => {
+    const firestore = getFirestore();
+    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
     updateDoc(surveyCollection, {
       [answerString]: {
         [answerString]: false,
@@ -86,6 +90,8 @@ const SurveyScreen = ({ route }) => {
   };
 
   const handleLastCheckBox = (checkboxAnswers) => {
+    const firestore = getFirestore();
+    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
     setCheckedLastQuestion(checkboxAnswers.message);
     updateDoc(surveyCollection, {
       [answerString]: [checkboxAnswers],
@@ -93,6 +99,8 @@ const SurveyScreen = ({ route }) => {
   };
 
   const handleFirstCheckBox = (checkboxAnswers) => {
+    const firestore = getFirestore();
+    const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
     setCheckedFirstQuestion(checkboxAnswers.message);
     updateDoc(surveyCollection, {
       [answerString]: [checkboxAnswers],

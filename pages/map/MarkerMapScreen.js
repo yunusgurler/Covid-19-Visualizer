@@ -20,7 +20,7 @@ const MarkerMapScreen = ({ route }) => {
   const db = getDatabase();
   const [loggedInUser, setLoggedInUser] = useState(route.params.user);
 
-  const passData = (lat, long) => {
+  const passData = (lat, long, address) => {
     if (lat > 0 && long > 0) {
       const firestore = getFirestore();
       const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
@@ -55,6 +55,7 @@ const MarkerMapScreen = ({ route }) => {
                 key={i}
                 title={"Death: " + place.Confirmed}
                 coordinate={place.Coordinate}
+                pinColor={"#56D6FF"}
               />
             ))}
           <TouchableOpacity
