@@ -11,18 +11,17 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/core";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import GeolocationHandler from "../home/GeolocationHandler";
+import LocationContext from "../../store/LocationHandler";
 
 export default function ProfileScreen() {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-
   const auth = getAuth();
   const navigation = useNavigation();
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState("");
+  const locationCtx = useContext(LocationContext);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -35,11 +34,9 @@ export default function ProfileScreen() {
     }
   });
 
-  const passData = (lat, long, address) => {
-    if (address != "" && address != null) {
-      setDisplayCurrentAddress(address);
-    }
-  };
+  useEffect(() => {
+    setDisplayCurrentAddress(locationCtx.address);
+  }, [loggedInUser, locationCtx]);
 
   const handleLogout = () => {
     const auth = getAuth();
@@ -54,7 +51,6 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <GeolocationHandler passData={passData} />
       <View
         style={{
           backgroundColor: "#c6f0fe",

@@ -1,8 +1,9 @@
 import { Platform, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MapView, { Marker, Heatmap, PROVIDER_GOOGLE } from "react-native-maps";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import GeolocationHandler from "../home/GeolocationHandler";
+import LocationContext from "../../store/LocationHandler";
 
 const MapScreen = ({ loggedInUser }) => {
   const [mapRegion, setMapRegion] = useState({
@@ -11,8 +12,6 @@ const MapScreen = ({ loggedInUser }) => {
     latitudeDelta: 1,
     longitudeDelta: 1,
   });
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
   let [points, setPoints] = useState([
     { latitude: 41.0456, longitude: 28.8247, weight: 1 },
     { latitude: 41.0956, longitude: 28.9247, weight: 2 },
@@ -50,26 +49,7 @@ const MapScreen = ({ loggedInUser }) => {
     { latitude: 41.1174, longitude: 28.4116, weight: 3 },
     { latitude: 41.1067, longitude: 28.5315, weight: 2 },
   ]);
-
-  const passData = (lat, long, address) => {
-    if (lat > 0 && long > 0) {
-      const firestore = getFirestore();
-      const surveyCollection = doc(firestore, "Survey DB", loggedInUser?.uid);
-
-      getDoc(surveyCollection).then((snapshot) => {
-        if (snapshot?._document !== undefined && snapshot?._document !== null) {
-          let resultScore =
-            snapshot._document.data.value.mapValue.fields?.ResultScore?.mapValue
-              ?.fields.Score?.stringValue;
-
-          if (parseInt(resultScore) > 60) {
-            setLatitude(lat);
-            setLongitude(long);
-          }
-        }
-      });
-    }
-  };
+  const locationCtx = useContext(LocationContext);
 
   useEffect(() => {
     const firestore = getFirestore();
@@ -77,42 +57,25 @@ const MapScreen = ({ loggedInUser }) => {
 
     getDoc(surveyCollection).then((snapshot) => {
       if (snapshot?._document !== undefined && snapshot?._document !== null) {
-        let data = snapshot?._document?.data?.value?.mapValue.fields;
-
         let resultScore =
-          data?.ResultScore?.mapValue?.fields?.Score?.stringValue;
+          snapshot._document.data.value.mapValue.fields?.ResultScore?.mapValue
+            ?.fields.Score?.stringValue;
 
-        if (resultScore > 60) {
-          let latitudeArray = Object.values(data.latitude)[0]?.values;
-          let longitudeArray = Object.values(data.longitude)[0]?.values;
+        if (parseInt(resultScore) > 60) {
+          let currentLocation = {
+            latitude: locationCtx.latitude,
+            longitude: locationCtx.longitude,
+            weight: 3,
+          };
 
-          if (latitudeArray) {
-            latitudeArray &&
-              latitudeArray.map((a) => setLatitude(a.doubleValue));
-          }
-          if (longitudeArray) {
-            longitudeArray &&
-              longitudeArray.map((a) => setLongitude(a.doubleValue));
-          }
+          setPoints([...points, currentLocation]);
         }
       }
     });
-  }, [latitude, longitude, loggedInUser]);
-
-  useEffect(() => {
-    if (latitude > 0 && longitude > 0) {
-      let currentLocation = {
-        latitude: latitude,
-        longitude: longitude,
-        weight: 3,
-      };
-      setPoints([...points, currentLocation]);
-    }
-  }, [latitude, longitude]);
+  }, [locationCtx, loggedInUser, mapRegion]);
 
   return (
     <View style={styles.container}>
-      <GeolocationHandler passData={passData} />
       <MapView
         provider={PROVIDER_GOOGLE}
         ref={(map) => (map = map)}

@@ -13,6 +13,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import MarkerMapScreen from "./pages/map/MarkerMapScreen";
 import NewsScreen from "./pages/home/NewsScreen";
+import { LocationContextProvider } from "./store/LocationHandler";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -73,31 +74,33 @@ function Home({ route, navigation }) {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Splash"
-          component={SplashScreen}
-        />
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: false }}
-        />
+    <LocationContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Splash"
+            component={SplashScreen}
+          />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={LoginScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="SignUp"
-          component={SignUpScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={LoginScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="SignUp"
+            component={SignUpScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </LocationContextProvider>
   );
 }
 if (process.env.NODE_ENV === "debug") {

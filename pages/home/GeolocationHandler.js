@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import * as Location from "expo-location";
+import LocationContext from "../../store/LocationHandler";
 
 const GeolocationHandler = (props) => {
   const [locationServiceEnabled, setLocationServiceEnabled] = useState(false);
+  const locationCtx = useContext(LocationContext);
 
   useEffect(() => {
     CheckIfLocationEnabled();
@@ -37,10 +39,7 @@ const GeolocationHandler = (props) => {
       );
     }
 
-    let { coords } = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.Highest,
-      maximumAge: 10000,
-    });
+    let { coords } = await Location.getCurrentPositionAsync({});
 
     if (coords) {
       const { latitude, longitude } = coords;
@@ -52,7 +51,7 @@ const GeolocationHandler = (props) => {
 
       for (let item of response) {
         let address = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}`;
-
+        locationCtx.locationHandler(latitude, longitude, address);
         props.passData(latitude, longitude, address);
       }
     }
