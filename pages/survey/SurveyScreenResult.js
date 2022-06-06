@@ -40,12 +40,13 @@ const SurveyScreenResult = (props) => {
 
       if (valuesArray) {
         valuesArray &&
-          valuesArray.map(
-            (a) =>
-              (arrayValueScore += parseInt(
+          valuesArray.map((a) => {
+            if (a.mapValue) {
+              arrayValueScore += parseInt(
                 a.mapValue?.fields?.score?.integerValue
-              ))
-          );
+              );
+            }
+          });
       }
     });
 
@@ -67,7 +68,7 @@ const SurveyScreenResult = (props) => {
 
   return (
     <View style={styles.container}>
-      {(finalScore * 1.6).toFixed(2) > 60 ? (
+      {(finalScore * 1.588).toFixed(1) > 60 ? (
         <Ionicons name="sad-outline" size={80} color="black" />
       ) : (
         <Ionicons name="happy-outline" size={80} color="black" />
@@ -77,7 +78,7 @@ const SurveyScreenResult = (props) => {
         Hello {username.charAt(0).toUpperCase() + username.slice(1)}
       </Text>
       <Text style={styles.covid}>
-        Your Covid-19 risk is % {(finalScore * 1.6).toFixed(2)}
+        Your Covid-19 risk is % {(finalScore * 1.588).toFixed(1)}
       </Text>
     </View>
   );
